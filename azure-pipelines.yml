@@ -5,7 +5,11 @@
 
 trigger:
 - main
-
+parameters:
+- name: DashboardIDs
+  displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
+  type: string
+  default: All
 pool:
   vmImage: ubuntu-latest
 
@@ -69,12 +73,16 @@ jobs:
           "Content-Type" = "application/json"
       }
 
-      # Construct the request body as a PowerShell object
+      # Split the Dashboard IDs entered as a parameter
+      $dashboardIdsArray = @()
+      if ($(DashboardIDs) -ne "All") {
+          $dashboardIdsArray = $(DashboardIDs) -split ','
+      }
+
+      # Construct the request body with the Dashboard IDs
       $requestBody = @{
-      "DashboardId": [
-        "string"
-      ],
-      "CanIncludeSensitiveInformation": true
+          "DashboardId" = $dashboardIdsArray
+          "CanIncludeSensitiveInformation" = $true
       }
 
       # Convert the request body to JSON format
