@@ -10,9 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: CallApiAndStoreResponse
-  steps:
-  jobs:
+
 - job: GetBearerToken
   steps:
   - powershell: |
