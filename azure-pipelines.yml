@@ -60,5 +60,31 @@ jobs:
 
     displayName: 'Call API with Bearer Token'
  
+  - powershell: |
+      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job"  # API endpoint
+      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+          "Content-Type" = "application/json"
+      }
+
+      # Construct the request body as a PowerShell object
+      $requestBody = @{
+      "DashboardId": [
+        "string"
+      ],
+      "CanIncludeSensitiveInformation": true
+      }
+
+      # Convert the request body to JSON format
+      $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
+
+      # Send the POST request using the bearer token and request body
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $requestBodyJson
+
+      # Display the response
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+
+    displayName: 'Send POST Request to API'
 
