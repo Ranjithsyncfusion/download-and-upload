@@ -97,13 +97,14 @@ jobs:
       $jobId = $response.Data.JobId
 
       Write-Host "Extracted JobId: $jobId"
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$jobId"  # API endpoint
-      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
+    displayName: 'Send POST Request to API'
+  - powershell: |
+      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(jobId)"  # API endpoint
+      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+      echo $(jobId)
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-
-    displayName: 'Send POST Request to API'
 
