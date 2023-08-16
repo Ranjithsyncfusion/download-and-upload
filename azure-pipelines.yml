@@ -33,5 +33,20 @@ jobs:
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertoken]$storedAccessToken"
     displayName: 'Get Bearer Token and Send POST Request'
+     
+  - powershell: |
+      $apiEndpoint = "Self-Hosted Server: https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards"  # API endpoint
+      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+      }
+
+      # Send the GET request using the bearer token
+      $response = Invoke-RestMethod -Uri $apiEndpoint -Method Get -Headers $headers
+
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+
+    displayName: 'Call API with Bearer Token'
 
 
