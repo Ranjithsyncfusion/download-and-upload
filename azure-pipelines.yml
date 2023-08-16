@@ -123,6 +123,33 @@ jobs:
       Write-Host "ItemContent: $itemContent"
       Write-Host "ItemExtension: $itemExtension"
 
-    displayName: 'Run API and Get Response'
+      Write-Host "##vso[task.setvariable variable=itemcontent]$itemContent"
+      Write-Host "##vso[task.setvariable variable=itemExtension]$itemExtension"
 
+    displayName: 'Run API and Get Response'
+  - powershell: |
+      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
+      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+          "Content-Type" = "application/json"
+      }
+
+      # Construct the request body
+      $requestBody = @{
+          "FileContent": "$(itemContent)",
+          "FileExtension": "$(itemExtension)"
+      }
+
+      # Convert the request body to JSON format
+      $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
+
+      # Send the POST request using the bearer token and request body
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $requestBodyJson
+
+      # Display the response
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+
+    displayName: 'Run API with Request Body'
 
