@@ -33,7 +33,7 @@ jobs:
     displayName: 'Get Bearer Token'
 
   - script: |
-      apiUrl="https://hotfix-linux.boldbi.com/server-api-reference/v4.0/api-reference/#operation/Dashboards_GetDashboards"
+      apiUrl="https://hotfix-docker.boldbi.com/bi/api/site/site1/token"
       response=$(curl -s "$apiUrl")
 
       # Store the response in a pipeline variable
