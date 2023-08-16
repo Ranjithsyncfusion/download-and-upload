@@ -37,7 +37,7 @@ jobs:
   - powershell: |
       $apiEndpoint = "Self-Hosted Server: https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
-
+      echo "$(Bearertoken)"
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
       }
