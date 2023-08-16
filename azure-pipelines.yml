@@ -29,7 +29,7 @@ jobs:
       # Extract the bearer token from the response and store it in a variable
       $token = $response.access_token
       Write-Host "##vso[task.setvariable variable=BearerToken;issecret=true]$token"
-
+      echo "$token"
     displayName: 'Get Bearer Token'
 
   - script: |
