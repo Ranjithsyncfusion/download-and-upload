@@ -12,6 +12,28 @@ pool:
 jobs:
 - job: CallApiAndStoreResponse
   steps:
+  jobs:
+- job: GetBearerToken
+  steps:
+  - powershell: |
+      $apiUrl = "https://api.example.com/token"
+      $username = "your_username"
+      $password = "your_password"
+
+      $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("${username}:${password}")))
+
+      $headers = @{
+        Authorization = "Basic $base64AuthInfo"
+      }
+
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers
+
+      # Extract the bearer token from the response and store it in a variable
+      $token = $response.access_token
+      Write-Host "##vso[task.setvariable variable=BearerToken;issecret=true]$token"
+
+    displayName: 'Get Bearer Token'
+
   - script: |
       apiUrl="https://hotfix-linux.boldbi.com/server-api-reference/v4.0/api-reference/#operation/Dashboards_GetDashboards"
       response=$(curl -s "$apiUrl")
