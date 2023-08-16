@@ -56,9 +56,8 @@ jobs:
       $response | ForEach-Object {
           $idsArray += $_.Id
       }
-
-      Write-Host "Extracted IDs: $($idsArray -join ',')"
-      Write-Host "##vso[task.setvariable variable=ExtractedIds;]$($idsArray -join ',')"
+      $idsArrayJson = $idsArray | ConvertTo-Json -Depth 10
+      Write-Host "##vso[task.setvariable variable=ExtractedIds;isOutput=true]$idsArrayJson"
       echo "$ExtractedIds"
     displayName: 'Call API with Bearer Token'
 
