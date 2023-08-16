@@ -49,20 +49,13 @@ jobs:
       } catch {
           Write-Host "Error: $($_.Exception.Message)"
       }
-      # Initialize an array to store the IDs
-      $idsArray = @()
+      # Convert the response to a JSON string
+      $responseJson = $response | ConvertTo-Json -Depth 10
 
-      # Extract "Id" values from the response and add them to the array
-      $response | ForEach-Object {
-          $idsArray += $_.Id
-      }
-      Write-Host "##vso[task.setvariable variable=ExtractedIds;isOutput=true]$($idsArray -join ',')"
-      echo "$ExtractedIds"
-      extractedIds=$(ExtractedIds) # Retrieve the array of IDs from the variable
-      idsArray=($extractedIds -split ',')  # Convert the comma-separated string back to an array
+      # Display the response content
+      Write-Host "API Response Content: $responseJson"
 
-      # Display the extracted IDs
-      Write-Host "Extracted IDs: $($idsArray -join ',')"
+      echo "$responseJson"
     displayName: 'Call API with Bearer Token'
  
 
