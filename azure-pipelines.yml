@@ -16,6 +16,7 @@ jobs:
   - powershell: |
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/token"  # URL to get bearer token
       $credentials = @{
+          grant_type: "password"
           username = "admin"
           password = "Admin@123"
       }
