@@ -101,8 +101,8 @@ jobs:
 
     displayName: 'Send POST Request to API'
   - powershell: |
-      echo $JobID
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$JobID"  # API endpoint
+      echo $(JobID)
+      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(JobID)"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
