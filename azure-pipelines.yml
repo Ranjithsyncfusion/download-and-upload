@@ -138,8 +138,8 @@ jobs:
 
       # Construct the request body
       $requestBody = @{
-          "FileContent" = $itemContent,
-          "FileExtension" = $itemExtension
+          "FileContent" = $(itemContent),
+          "FileExtension" = $(itemExtension)
       }
 
       # Convert the request body to JSON format
