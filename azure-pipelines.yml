@@ -172,3 +172,18 @@ jobs:
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
     displayName: 'Get Bearer Token and Send POST Request'
+  - powershell: |
+      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
+      $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
+
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+          "Content-Type" = "application/json"
+      }
+
+      # Send the GET request using the bearer token
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
+
+      # Display the response
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+    displayName: 'Run API and Get Response'
