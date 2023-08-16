@@ -93,6 +93,10 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      # Extract the JobId from the response and store it in another variable
+      $jobId = $response.Data.JobId
+
+      Write-Host "Extracted JobId: $jobId"
 
     displayName: 'Send POST Request to API'
 
