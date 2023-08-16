@@ -14,9 +14,9 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $apiUrl = "https://api.example.com/token"
-      $username = "your_username"
-      $password = "your_password"
+      $apiUrl = "https://hotfix-linux.boldbi.com/api/site/test/token"
+      $username = "Admin"
+      $password = "Admin@123"
 
       $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("${username}:${password}")))
 
