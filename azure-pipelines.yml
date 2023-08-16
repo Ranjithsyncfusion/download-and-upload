@@ -98,15 +98,14 @@ jobs:
 
       Write-Host "Extracted JobId: $jobId"
       echo "##vso[task.setvariable variable=JobID]$jobId"
-
-    displayName: 'Send POST Request to API'
-  - powershell: |
       echo $(JobID)
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(JobID)"  # API endpoint
+      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$jobId"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-  displayName: 'Download dashboard'
+
+    displayName: 'Send POST Request to API'
+
