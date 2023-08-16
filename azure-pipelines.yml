@@ -42,11 +42,13 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
       }
 
-      # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiEndpoint -Method Get -Headers $headers
-
-      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-
+      try {
+          # Send the GET request using the bearer token
+          $response = Invoke-RestMethod -Uri $apiEndpoint -Method Get -Headers $headers
+          Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      } catch {
+          Write-Host "Error: $($_.Exception.Message)"
+      }
     displayName: 'Call API with Bearer Token'
 
 
