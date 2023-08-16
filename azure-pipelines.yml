@@ -75,8 +75,8 @@ jobs:
 
       # Split the Dashboard IDs entered as a parameter
       $dashboardIdsArray = @()
-      if ($(DashboardIDs) -ne "All") {
-          $dashboardIdsArray = $(DashboardIDs) -split ','
+      if ($(env:DashboardIDs) -ne "All") {
+          $dashboardIdsArray = $(env:DashboardIDs) -split ','
       }
 
       # Construct the request body with the Dashboard IDs
