@@ -49,6 +49,13 @@ jobs:
       } catch {
           Write-Host "Error: $($_.Exception.Message)"
       }
+      $ids = $response | ForEach-Object { $_.ID }
+
+      # Convert IDs to a comma-separated string
+      $idsString = $ids -join ','
+
+      Write-Host "Extracted IDs: $idsString"
+      echo "$idsString"
     displayName: 'Call API with Bearer Token'
 
 
