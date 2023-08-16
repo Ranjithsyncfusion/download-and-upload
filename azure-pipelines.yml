@@ -25,7 +25,12 @@ jobs:
 
       # Debugging line to inspect the authentication response
       Write-Host "Authentication Response: $($tokenResponse | ConvertTo-Json -Depth 10)"
-      
+      $bearerToken = $tokenResponse.access_token
+
+      # Store the access token in a new variable
+      $storedAccessToken = $bearerToken
+
+      echo "$storedAccessToken"
     displayName: 'Get Bearer Token and Send POST Request'
 
 
