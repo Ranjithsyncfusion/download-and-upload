@@ -9,11 +9,16 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+jobs:
+- job: CallApiAndStoreResponse
+  steps:
+  - script: |
+      apiUrl="https://hotfix-linux.boldbi.com/server-api-reference/v4.0/api-reference/#operation/Dashboards_GetDashboards"
+      response=$(curl -s "$apiUrl")
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      # Store the response in a pipeline variable
+      echo "##vso[task.setvariable variable=ApiResponse;isOutput=true]$response"
+    
+    displayName: 'Call API and Store Response'
+
+
