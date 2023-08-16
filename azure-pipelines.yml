@@ -52,10 +52,19 @@ jobs:
       # Convert the response to a JSON string
       $responseJson = $response | ConvertTo-Json -Depth 10
 
-      # Display the response content
-      Write-Host "API Response Content: $responseJson"
+      $parsedResponse = $responseJson | ConvertFrom-Json
 
-      echo "$responseJson"
+      # Initialize an array to store the IDs
+      $idsArray = @()
+
+      # Extract "Id" values from the parsed response and add them to the array
+      foreach ($item in $parsedResponse) {
+          $idsArray += $item.Id
+      }
+
+      # Display the extracted IDs
+      Write-Host "Extracted IDs: $($idsArray -join ',')"
+
     displayName: 'Call API with Bearer Token'
  
 
