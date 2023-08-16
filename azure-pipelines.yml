@@ -14,7 +14,7 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $apiUrl = "https://hotfix-linux.boldbi.com/api/site/test/token"
+      $apiUrl = "https://hotfix-docker.boldbi.com/api/site/site1/token"
       $username = "Admin"
       $password = "Admin@123"
 
