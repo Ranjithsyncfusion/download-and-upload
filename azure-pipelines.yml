@@ -49,16 +49,9 @@ jobs:
       } catch {
           Write-Host "Error: $($_.Exception.Message)"
       }
-      # Convert the response to a JSON string
-      $responseJson = $response | ConvertTo-Json -Depth 10
-
-      $parsedResponse = $responseJson | ConvertFrom-Json
-
-      # Initialize an array to store the IDs
+      # Extract the "Id" values from the response
       $idsArray = @()
-
-      # Extract "Id" values from the parsed response and add them to the array
-      foreach ($item in $parsedResponse) {
+      foreach ($item in $response.Data) {
           $idsArray += $item.Id
       }
 
