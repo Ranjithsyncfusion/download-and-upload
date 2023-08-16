@@ -152,4 +152,23 @@ jobs:
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
 
     displayName: 'Run API with Request Body'
+  - powershell: |
+      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
+      $credentials = @{
+          grant_type = "password"
+          username = "admin"
+          password = "Admin@123"
+      }
+      
+      $tokenResponse = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $credentials
 
+      # Debugging line to inspect the authentication response
+      Write-Host "Authentication Response: $($tokenResponse | ConvertTo-Json -Depth 10)"
+      $bearerToken = $tokenResponse.access_token
+
+      # Store the access token in a new variable
+      $storedAccessToken = $bearerToken
+
+      echo "$storedAccessToken"
+      echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
+    displayName: 'Get Bearer Token and Send POST Request'
