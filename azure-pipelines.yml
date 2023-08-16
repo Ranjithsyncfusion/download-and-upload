@@ -116,6 +116,12 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+     
+      $itemContent = $response.Data.ItemContent
+      $itemExtension = $response.Data.ItemExtension
+
+      Write-Host "ItemContent: $itemContent"
+      Write-Host "ItemExtension: $itemExtension"
 
     displayName: 'Run API and Get Response'
 
