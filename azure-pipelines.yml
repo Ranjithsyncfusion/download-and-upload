@@ -30,7 +30,8 @@ jobs:
   - script: |
      echo ${{ parameters.sourcesitename }}
   - powershell: | 
-      $apiUrl = ${{ parameters.sourcesitename }}/token"  # URL to get bearer token
+      $apiUrl = ${{ parameters.sourcesitename }}/token  # URL to get bearer token
+      echo $apiUrl
       $credentials = @{
           grant_type = "password"
           username = "admin"
