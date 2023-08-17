@@ -200,6 +200,9 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
+
+      $dataValues = $dataValues | ConvertTo-Json -Depth 10
+      echo $dataValues
       # Request Body for this api
       $requestBody = @{
           "FileContent" = $secureContent
