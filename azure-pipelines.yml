@@ -9,7 +9,7 @@ parameters:
   #type: string
 - name: targetsitename
   displayName: Please enter the targetsite name like "https://<App_Base URL>/bi/site/<Site Name>"
-  #type: string
+  type: string
 - name: DashboardIDs
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
@@ -26,7 +26,10 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $apiUrl = "$(sourcesitename).Trim('"')/token"  # URL to get bearer token
+      $sourceSiteName = "${{ parameters.sourcesitename }}"
+      $sourceSiteName = $sourceSiteName.Trim('"')
+      Write-Host "Source Site Name without Quotes: $sourceSiteName"
+      $apiUrl = "$sourceSiteName/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
