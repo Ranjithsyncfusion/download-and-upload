@@ -133,7 +133,6 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      $secureContent = "$(itemcontent)"
       # Construct the request body
       $requestBody = @{
           "FileContent" = $itemContent
