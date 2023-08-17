@@ -67,7 +67,6 @@ jobs:
     displayName: 'Call API with Bearer Token'
  
   - powershell: |
-      $Idarray = $($idsArray -join ',')
       echo $Idarray1
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
@@ -76,7 +75,14 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      $dashboardIdsArray=$Idarray1
+      $dashboardIdsArray = @()
+      if (${{ parameters.DashboardIDs }} -eq All) {
+          $dashboardIdsArray = $Idarray1 -split ','
+          $dashboardIdsArray = $dashboardIdsArray -replace '^"|"$', '"$0"'
+      } else {
+          $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
+          $dashboardIdsArray = $dashboardIdsArray -replace '^"|"$', '"$0"'
+      }
       echo $dashboardIdsArray
 
       # Construct the request body with the Dashboard IDs
