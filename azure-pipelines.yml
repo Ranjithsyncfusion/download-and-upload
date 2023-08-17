@@ -10,7 +10,7 @@ parameters:
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
   default: All
-- name: categody ID
+- name: categodyID
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
   #default: All
@@ -193,3 +193,33 @@ jobs:
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
     displayName: 'Run API and Get Response'
+  - powershell: |
+      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
+      $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
+
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+          "Content-Type" = "application/json"
+      }
+      # Request Body for this api
+      $requestBody = @{
+          "FileContent" = $secureContent
+          "FileExtension" = "$(itemExtension)"
+          "CategoryId": ${{ parameters.categodyID }},
+            "ItemMetaInfo": [
+            {
+            "Name": "string",
+            "Description": "string",
+            "Id": "string",
+            "CategoryId": "string",
+            "ShouldValidateSchema": true,
+            "DataSources": {}
+            }
+            ]
+        }
+      # Send the GET request using the bearer token
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
+
+      # Display the response
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+  displayName: 'Run API and Get Response'
