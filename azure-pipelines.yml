@@ -202,9 +202,8 @@ jobs:
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
-          "ItemMetaInfo" = @{
-            "Data" = $dataValues
-          }
+          "ItemMetaInfo" = $dataValues
+
            }
 
       # Display the constructed request body
