@@ -62,7 +62,6 @@ jobs:
       # Display the extracted IDs
       Write-Host "Extracted IDs: $($idsArray -join ',')"
       echo "##vso[task.setvariable variable=Idarray]$($idsArray -join ',')"
-      $Idarray = $(Idarray -join ',')
     displayName: 'Call API with Bearer Token'
  
   - powershell: |
