@@ -4,6 +4,12 @@
 # https://aka.ms/yaml
 
 parameters:
+- name: sourcesitename
+  displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
+  type: string
+- name: targetsitename
+  displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
+  type: string
 - name: DashboardIDs
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
@@ -20,7 +26,7 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/token"  # URL to get bearer token
+      $apiUrl = "${{ parameters.sourcesitename }}/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
@@ -41,7 +47,7 @@ jobs:
     displayName: 'Get Bearer Token and Send POST Request for source machine'
      
   - powershell: |
-      $apiEndpoint = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards"  # API endpoint
+      $apiEndpoint = "${{ parameters.sourcesitename }}/v4.0/dashboards"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
       echo "$(Bearertoken)"
       $headers = @{
@@ -66,7 +72,7 @@ jobs:
       $Idarray = $($idsArray -join ',')
       echo $Idarray
       echo "##vso[task.setvariable variable=Idarray1]$Idarray"
-      $apiUrl1 = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job"  # API endpoint
+      $apiUrl1 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
@@ -102,12 +108,12 @@ jobs:
 
       Write-Host "Extracted JobId: $jobId"
       Write-Host "##vso[task.setvariable variable=jobid]$jobId"
-      $downloadUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$jobId"
+      $downloadUrl = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job/$jobId"
       Write-Host "Download URL: $downloadUrl"
 
     displayName: 'Get the JOB ID for downlaod the dashboard'
   - powershell: |
-      $apiUrl0 = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
+      $apiUrl0 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
@@ -124,7 +130,7 @@ jobs:
       $itemContent = $response.Data.ItemContent
       $itemExtension = $response.Data.ItemExtension
 
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
+      $apiUrl = "${{ parameters.sourcesitename }}/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
@@ -146,7 +152,7 @@ jobs:
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
     
-      $apiUrl1 = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
+      $apiUrl1 = "${{ parameters.targetsitename }}/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
@@ -161,7 +167,7 @@ jobs:
       # Store the access token in a new variable
       $storedAccessToken = $bearerToken
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
-      $apiUrl2 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
+      $apiUrl2 = "${{ parameters.targetsitename }}/v4.0/categories"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
@@ -171,7 +177,7 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl2 -Method Get -Headers $headers
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-      $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
+      $apiUrl3 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
@@ -195,7 +201,7 @@ jobs:
       # Extract the Job ID
       $jobId = $response.Data.JobId
       
-      $apiUrl4 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload/job/$jobId"  # Replace with your API endpoint
+      $apiUrl4 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload/job/$jobId"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
 
       $headers = @{
