@@ -205,13 +205,6 @@ jobs:
           "ItemMetaInfo" = $dataValues
            }
 
-      # Display the constructed request body
-      Write-Host "Request Body:"
-      Write-Host ($request | ConvertTo-Json -Depth 10)
-      $requestBodyJson = $request | ConvertTo-Json -Depth 10
-      $fullRequestBody = $requestBodyJson
-      Write-Host "Stored Request Body:"
-      Write-Host $fullRequestBody
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Post -Headers $headers 
 
