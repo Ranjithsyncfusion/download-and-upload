@@ -207,7 +207,7 @@ jobs:
       $requestBody = @{
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
-          "CategoryId" = ${{ parameters.categodyID }},
+          "CategoryId" = ${{ parameters.categodyID }}
             "ItemMetaInfo" = $dataJson
         }
       # Send the GET request using the bearer token
