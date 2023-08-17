@@ -26,11 +26,6 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $sourceSiteName = '${{ parameters.sourcesitename }}'
-      $sourceSiteName = $sourceSiteName -replace '^"(.*)"$', '$1'
-      Write-Host "Source Site Name without Quotes: $sourceSiteName"
-      Write-Host "##vso[task.setvariable variable=sourcesite]$sourceSiteName"
-      echo $sourcesite
       $apiUrl = "$sourcesite/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
