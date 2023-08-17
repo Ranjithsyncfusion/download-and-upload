@@ -85,7 +85,7 @@ jobs:
       }
 
       # Add double quotes around each dashboard ID
-      $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { $_ -replace '^"|"$', '"$0"' }
+      $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { '"' + $_ + '"' }
 
       Write-Host "Final dashboardIdsArray: $dashboardIdsArray"
 
