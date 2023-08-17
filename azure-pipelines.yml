@@ -73,7 +73,7 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-        echo $($Idarray -join ',')
+        echo $(Idarray -join ',')
       # Split the Dashboard IDs entered as a parameter
         $dashboardIdsArray = @()
         if (${{ parameters.DashboardIDs }} -ne "All") {
