@@ -11,9 +11,8 @@ parameters:
   type: string
   default: All
 - name: categodyID
-  displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
+  displayName: Please enter the catogory ID.
   type: string
-  #default: All
 pool:
   vmImage: ubuntu-latest
 
