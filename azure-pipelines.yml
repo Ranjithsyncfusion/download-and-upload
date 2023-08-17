@@ -13,8 +13,9 @@ parameters:
 - name: categodyID
   displayName: Please enter the catogory ID.
   type: string
+
 pool:
-  vmImage: ubuntu-latest
+  vmImage: Windows-latest
 
 jobs:
 
