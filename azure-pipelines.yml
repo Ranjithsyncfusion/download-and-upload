@@ -17,7 +17,9 @@ parameters:
 - name: categodyID
   displayName: Please enter the catogory ID.
   type: string
-
+variables:
+- name: sourcesite
+  value: ${{ parameters.sourcesitename }}
 pool:
   vmImage: Windows-latest
 
@@ -26,7 +28,7 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $apiUrl = "${{ parameters.sourcesitename }}/token"  # URL to get bearer token
+      $apiUrl = "$sourcesite/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
