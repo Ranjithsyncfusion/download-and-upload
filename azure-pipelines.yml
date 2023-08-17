@@ -76,7 +76,7 @@ jobs:
           "Content-Type" = "application/json"
       }
       $dashboardIdsArray = @()
-      if (${{ parameters.DashboardIDs }} -eq All) {
+      if (${{ parameters.DashboardIDs }} -eq "All") {
           $dashboardIdsArray = $Idarray1 -split ','
           $dashboardIdsArray = $dashboardIdsArray -replace '^"|"$', '"$0"'
       } else {
