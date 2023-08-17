@@ -213,7 +213,7 @@ jobs:
       Write-Host "Stored Request Body:"
       Write-Host $fullRequestBody
       # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl3 -Method Get -Headers $headers 
+      $response = Invoke-RestMethod -Uri $apiUrl3 -Method Post -Headers $headers 
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
