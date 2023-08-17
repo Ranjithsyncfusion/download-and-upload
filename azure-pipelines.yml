@@ -68,7 +68,7 @@ jobs:
  
   - powershell: |
       $Idarray = $($idsArray -join ',')
-      echo $Idarray
+      echo $Idarray1
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job"  # API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
@@ -76,7 +76,7 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      $dashboardIdsArray=$(Idarray)
+      $dashboardIdsArray=$Idarray1
       echo $dashboardIdsArray
 
       # Construct the request body with the Dashboard IDs
