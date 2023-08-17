@@ -208,7 +208,8 @@ jobs:
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
-            "ItemMetaInfo" = $dataJson
+            "ItemMetaInfo" = 
+             $dataJson
         }
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Get -Headers $headers
