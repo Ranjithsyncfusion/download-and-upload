@@ -74,7 +74,6 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      $Idarray = $($Idarray -join ',')
       echo $Idarray
       $dashboardIdsArray = @()
       Write-Host "Input DashboardIDs: ${{ parameters.DashboardIDs }}"
