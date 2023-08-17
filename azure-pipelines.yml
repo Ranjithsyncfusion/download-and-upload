@@ -27,8 +27,10 @@ jobs:
 
 - job: GetBearerToken
   steps:
-  - powershell: |
-      echo $sourcesite
+  - script: |
+     echo $sourcesite
+     echo '${{ parameters.sourcesitename }}'
+  - powershell: | 
       $apiUrl = $sourcesite+"/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
