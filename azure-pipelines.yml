@@ -75,11 +75,16 @@ jobs:
       }
         echo $(Idarray)
       # Split the Dashboard IDs entered as a parameter
-        $dashboardIdsArray = @()
-        if (${{ parameters.DashboardIDs }} -ne "All") {
-            $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
-        }
+      $dashboardIdsArray = @()
+      if (${{ parameters.DashboardIDs }} -eq "All") {
+          $dashboardIdsArray = $Idarray -split ','
+      } else {
+          $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
+      }
+      # Add double quotes around each dashboard ID
+      $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { $_ -replace '^"|"$', '"$0"' }
 
+      echo $dashboardIdsArray
       # Construct the request body with the Dashboard IDs
       $requestBody = @{
           "DashboardId" = $dashboardIdsArray
