@@ -73,18 +73,24 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-        echo $(Idarray)
-      # Split the Dashboard IDs entered as a parameter
+      echo $(Idarray)
       $dashboardIdsArray = @()
+      Write-Host "Input DashboardIDs: ${{ parameters.DashboardIDs }}"
+      Write-Host "Value of Idarray: $Idarray"
+
       if (${{ parameters.DashboardIDs }} -eq "All") {
           $dashboardIdsArray = $Idarray -split ','
       } else {
           $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
       }
+
       # Add double quotes around each dashboard ID
       $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { $_ -replace '^"|"$', '"$0"' }
 
+      Write-Host "Final dashboardIdsArray: $dashboardIdsArray"
+
       echo $dashboardIdsArray
+
       # Construct the request body with the Dashboard IDs
       $requestBody = @{
           "DashboardId" = $dashboardIdsArray
