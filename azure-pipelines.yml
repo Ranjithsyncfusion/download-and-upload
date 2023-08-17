@@ -198,7 +198,7 @@ jobs:
       echo $dataValues
       # Request Body for this api
       $request = @{
-          "FileContent" = $secureContent
+          "ItemContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = $dataValues
