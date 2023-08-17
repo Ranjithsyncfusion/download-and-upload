@@ -26,8 +26,8 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: |
-      $sourceSiteName = "${{ parameters.sourcesitename }}"
-      $sourceSiteName = $sourceSiteName.Trim('"')
+      $sourceSiteName = '${{ parameters.sourcesitename }}'
+      $sourceSiteName = $sourceSiteName -replace '^"(.*)"$', '$1'
       Write-Host "Source Site Name without Quotes: $sourceSiteName"
       $apiUrl = "$sourceSiteName/token"  # URL to get bearer token
       $credentials = @{
