@@ -159,17 +159,16 @@ jobs:
       echo "rk"
       echo $dataValues
       echo "##vso[task.setvariable variable=dataValuesapi]$dataValues"
-
-    displayName: 'Get Dashboard Details'
+      echo 
   - powershell: |
-      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
+      $apiUrl1 = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
           password = "Admin@123"
       }
       
-      $tokenResponse = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $credentials
+      $tokenResponse = Invoke-RestMethod -Uri $apiUrl1 -Method Post -Body $credentials
 
       # Debugging line to inspect the authentication response
       Write-Host "Authentication Response: $($tokenResponse | ConvertTo-Json -Depth 10)"
@@ -180,9 +179,8 @@ jobs:
 
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
-    displayName: 'Get Bearer Token and Send POST Request for target machine'
   - powershell: |
-      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
+      $apiUrl2 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
       $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
 
       $headers = @{
@@ -191,13 +189,12 @@ jobs:
       }
 
       # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
+      $response = Invoke-RestMethod -Uri $apiUrl2 -Method Get -Headers $headers
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       echo $dataValuesapi
-    displayName: 'Get Categories in target machine'
   - powershell: |
-      $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
+      $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
       $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
 
       $headers = @{
@@ -211,17 +208,12 @@ jobs:
           "CategoryId": ${{ parameters.categodyID }},
             "ItemMetaInfo": [
             {
-            "Name": "string",
-            "Description": "string",
-            "Id": "string",
-            "CategoryId": "string",
-            "ShouldValidateSchema": true,
-            "DataSources": {}
+            $($dataValues | ConvertTo-Json -Depth 10)
             }
             ]
         }
       # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
+      $response = Invoke-RestMethod -Uri $apiUrl3 -Method Get -Headers $headers
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
