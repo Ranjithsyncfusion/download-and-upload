@@ -29,7 +29,8 @@ jobs:
       $sourceSiteName = '${{ parameters.sourcesitename }}'
       $sourceSiteName = $sourceSiteName -replace '^"(.*)"$', '$1'
       Write-Host "Source Site Name without Quotes: $sourceSiteName"
-      $apiUrl = "($sourceSiteName)/token"  # URL to get bearer token
+      Write-Host "##vso[task.setvariable variable=sourcesite]$sourceSiteName"
+      $apiUrl = "$sourcesite/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
           username = "admin"
