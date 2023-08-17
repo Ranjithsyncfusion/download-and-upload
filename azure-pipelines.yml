@@ -27,18 +27,16 @@ jobs:
 
 - job: GetBearerToken
   steps:
-  - script: |
-     echo ${{ parameters.sourcesitename }}
-  - script: | 
-      $apiUrl = ${{ parameters.sourcesitename }}/token  # URL to get bearer token
-      echo $apiUrl
+  - powershell: | 
+      #$apiUrl = ${{ parameters.sourcesitename }}/token  # URL to get bearer token
+      #echo $apiUrl
       $credentials = @{
           grant_type = "password"
           username = "admin"
           password = "Admin@123"
       }
       
-      $tokenResponse = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $credentials
+      $tokenResponse = Invoke-RestMethod -Uri https://hotfix-docker.boldbi.com/bi/site/site1/token -Method Post -Body $credentials
 
       # Debugging line to inspect the authentication response
       Write-Host "Authentication Response: $($tokenResponse | ConvertTo-Json -Depth 10)"
