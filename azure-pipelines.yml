@@ -205,7 +205,7 @@ jobs:
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }},
-            "ItemMetaInfo": [
+            "ItemMetaInfo" = [
             {
             $($dataValues | ConvertTo-Json -Depth 10)
             }
