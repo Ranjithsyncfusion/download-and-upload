@@ -192,6 +192,8 @@ jobs:
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       echo $dataValuesapi
+      $dataValues = $dataValues | ConvertTo-Json -Depth 10
+      echo $dataValues
   - powershell: |
       $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
       $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
