@@ -150,7 +150,7 @@ jobs:
       $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
 
       # Send the POST request using the bearer token and request body
-      $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $requestBodyJson
+      $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $requestBody
       # Extract the "Data" values and store them in a new variable
       $dataValues = $response.Data
       # Display the response
