@@ -204,7 +204,7 @@ jobs:
       $requestBody = @{
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
-          "CategoryId": ${{ parameters.categodyID }},
+          "CategoryId" = ${{ parameters.categodyID }},
             "ItemMetaInfo": [
             {
             $($dataValues | ConvertTo-Json -Depth 10)
