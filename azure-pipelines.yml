@@ -203,12 +203,10 @@ jobs:
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = $dataValues
-
            }
 
       # Display the constructed request body
       Write-Host "Request Body:"
-      Write-Host ($requestBody | ConvertTo-Json -Depth 10)
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Get -Headers $headers
 
