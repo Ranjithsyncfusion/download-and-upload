@@ -157,7 +157,7 @@ jobs:
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       echo "rk"
       echo $dataValues
-      echo "##vso[task.setvariable variable=dataValuesapi]$dataValues"
+    
       $apiUrl1 = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
@@ -188,11 +188,7 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl2 -Method Get -Headers $headers
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-      echo $dataValuesapi
-      $dataValues = $dataValues | ConvertTo-Json -Depth 10
-      echo $dataValues
-      $dataJson = $dataValues | ConvertTo-Json -Depth 10
-      echo $dataJson
+     
       $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
 
@@ -201,8 +197,6 @@ jobs:
           "Content-Type" = "application/json"
       }
       echo $dataValues
-      $dataJson = $dataValues | ConvertTo-Json -Depth 10
-      echo $dataJson
       # Request Body for this api
       $requestBody = @{
           "FileContent" = $secureContent
