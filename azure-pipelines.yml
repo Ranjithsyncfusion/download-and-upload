@@ -209,7 +209,7 @@ jobs:
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = @{
-            "Data" = $dataJson
+            "Data" = $dataValues
           }
            }
 
