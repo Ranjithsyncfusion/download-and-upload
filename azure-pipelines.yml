@@ -109,7 +109,7 @@ jobs:
 
     displayName: 'Get the JOB ID for downlaod the dashboard'
   - powershell: |
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
+      $apiUrl0 = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
       $headers = @{
@@ -118,7 +118,7 @@ jobs:
       }
 
       # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
+      $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
@@ -126,14 +126,6 @@ jobs:
       $itemContent = $response.Data.ItemContent
       $itemExtension = $response.Data.ItemExtension
 
-      Write-Host "ItemContent: $itemContent"
-      Write-Host "ItemExtension: $itemExtension"
-
-      Write-Host "##vso[task.setvariable variable=itemcontent]$itemContent"
-      Write-Host "##vso[task.setvariable variable=itemExtension]$itemExtension"
-
-    displayName: 'Download the dashboard'
-  - powershell: |
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
 
@@ -144,8 +136,8 @@ jobs:
       $secureContent = "$(itemcontent)"
       # Construct the request body
       $requestBody = @{
-          "FileContent" = $secureContent
-          "FileExtension" = "$(itemExtension)"
+          "FileContent" = $itemContent
+          "FileExtension" = $itemExtension
       }
       # Convert the request body to JSON format
       $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
@@ -190,8 +182,8 @@ jobs:
       }
       # Request Body for this api
       $request = @{
-          "ItemContent" = $secureContent
-          "ItemExtension" = "$(itemExtension)"
+          "ItemContent" = $itemContent
+          "ItemExtension" = $itemExtension
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = $dataValues
            }
