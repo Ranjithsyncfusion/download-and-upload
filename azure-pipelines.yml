@@ -62,7 +62,7 @@ jobs:
       # Display the extracted IDs
       Write-Host "Extracted IDs: $($idsArray -join ',')"
       echo "##vso[task.setvariable variable=Idarray]$($idsArray -join ',')"
-
+      $Idarray = $(Idarray -join ',')
     displayName: 'Call API with Bearer Token'
  
   - powershell: |
@@ -73,7 +73,8 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      echo $(Idarray)
+      $Idarray = $Idarray -join ','
+      echo $Idarray
       $dashboardIdsArray = @()
       Write-Host "Input DashboardIDs: ${{ parameters.DashboardIDs }}"
       Write-Host "Value of Idarray: $(Idarray)"
