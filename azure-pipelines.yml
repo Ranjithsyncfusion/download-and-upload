@@ -198,7 +198,7 @@ jobs:
       }
       echo $dataValues
       # Request Body for this api
-      $requestBody = @{
+      $request = @{
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
@@ -207,8 +207,8 @@ jobs:
 
       # Display the constructed request body
       Write-Host "Request Body:"
-      Write-Host ($requestBody | ConvertTo-Json -Depth 10)
-      $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
+      Write-Host ($request | ConvertTo-Json -Depth 10)
+      $requestBodyJson = $request | ConvertTo-Json -Depth 10
       $fullRequestBody = $requestBodyJson
       Write-Host "Stored Request Body:"
       Write-Host $fullRequestBody
