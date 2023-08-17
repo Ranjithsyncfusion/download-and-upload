@@ -198,12 +198,12 @@ jobs:
       }
       echo $dataValues
       # Request Body for this api
-      $request = @{
+      $request = 
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = $dataValues
-           }
+           
 
       # Display the constructed request body
       Write-Host "Request Body:"
