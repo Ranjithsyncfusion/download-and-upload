@@ -40,7 +40,7 @@ jobs:
 
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertoken]$storedAccessToken"
-    displayName: 'Get Bearer Token and Send POST Request'
+    displayName: 'Get Bearer Token and Send POST Request for source machine'
      
   - powershell: |
       $apiEndpoint = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards"  # API endpoint
@@ -107,7 +107,7 @@ jobs:
       $downloadUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$jobId"
       Write-Host "Download URL: $downloadUrl"
 
-    displayName: 'Send POST Request to API'
+    displayName: 'Get the JOB ID for downlaod the dashboard'
   - powershell: |
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
@@ -132,7 +132,7 @@ jobs:
       Write-Host "##vso[task.setvariable variable=itemcontent]$itemContent"
       Write-Host "##vso[task.setvariable variable=itemExtension]$itemExtension"
 
-    displayName: 'Run API and Get Response'
+    displayName: 'Download the dashboard'
   - powershell: |
       $apiUrl = "https://hotfix-docker.boldbi.com/bi/api/site/site1/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
@@ -157,7 +157,7 @@ jobs:
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
 
-    displayName: 'Run API with Request Body'
+    displayName: 'Get Dashboard Details'
   - powershell: |
       $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
       $credentials = @{
@@ -177,7 +177,7 @@ jobs:
 
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
-    displayName: 'Get Bearer Token and Send POST Request'
+    displayName: 'Get Bearer Token and Send POST Request for target machine'
   - powershell: |
       $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
       $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
@@ -192,7 +192,7 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-    displayName: 'Run API and Get Response'
+    displayName: 'Get Categories in target machine'
   - powershell: |
       $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
       $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
@@ -222,4 +222,4 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-  displayName: 'Run API and Get Response'
+  displayName: 'Upload the dashboard'
