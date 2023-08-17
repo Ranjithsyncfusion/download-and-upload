@@ -79,7 +79,7 @@ jobs:
       Write-Host "Value of Idarray: $(Idarray)"
 
       if (${{ parameters.DashboardIDs }} -eq "All") {
-          $dashboardIdsArray = $Idarray -split ','
+          $dashboardIdsArray = $(Idarray) -split ','
       } else {
           $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
       }
