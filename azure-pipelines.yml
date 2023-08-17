@@ -207,7 +207,7 @@ jobs:
           "CategoryId" = ${{ parameters.categodyID }},
             "ItemMetaInfo" = [
             {
-            $($dataValues | ConvertTo-Json -Depth 10)
+            $dataValues
             }
             ]
         }
