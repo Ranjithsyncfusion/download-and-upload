@@ -148,7 +148,7 @@ jobs:
           "FileExtension" = "$(itemExtension)"
       }
       # store the properties of data
-      $dataValues = $Data
+      $dataValues = $response.Data.Data
       # Convert the request body to JSON format
       $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
 
