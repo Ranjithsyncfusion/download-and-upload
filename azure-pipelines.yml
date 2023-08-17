@@ -158,6 +158,7 @@ jobs:
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       echo "rk"
       echo $dataValues
+      echo "##vso[task.setvariable variable=dataValuesapi]$dataValues"
 
     displayName: 'Get Dashboard Details'
   - powershell: |
@@ -193,6 +194,7 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl -Method Get -Headers $headers
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      echo $(dataValuesapi)
     displayName: 'Get Categories in target machine'
   - powershell: |
       $apiUrl = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
