@@ -214,4 +214,16 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      # Extract the Job ID
+      $jobId = $response.Data.JobId
+      
+      $apiUrl4 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload/job/$jobId"  # Replace with your API endpoint
+      $bearerToken = "$storedAccessToken"  # Access the pipeline variable
+
+      $headers = @{
+          "Authorization" = "Bearer $bearerToken"
+          "Content-Type" = "application/json"
+      }
+      $response = Invoke-RestMethod -Uri $apiUrl4 -Method Post -Headers $headers 
+
   displayName: 'Upload the dashboard'
