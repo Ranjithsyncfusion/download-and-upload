@@ -10,6 +10,10 @@ parameters:
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
   default: All
+- name: categody ID
+  displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
+  type: string
+  #default: All
 pool:
   vmImage: ubuntu-latest
 
