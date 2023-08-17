@@ -6,7 +6,7 @@
 parameters:
 - name: sourcesitename
   displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
-  #type: string
+  type: string
 - name: targetsitename
   displayName: Please enter the targetsite name like "https://<App_Base URL>/bi/site/<Site Name>"
   type: string
