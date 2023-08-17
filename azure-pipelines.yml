@@ -155,7 +155,6 @@ jobs:
       $dataValues = $response.Data
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-      echo $dataValues
     
       $apiUrl1 = "https://hotfix-linux.boldbi.com/bi/api/site/test/token"  # URL to get bearer token
       $credentials = @{
@@ -169,33 +168,25 @@ jobs:
       # Debugging line to inspect the authentication response
       Write-Host "Authentication Response: $($tokenResponse | ConvertTo-Json -Depth 10)"
       $bearerToken = $tokenResponse.access_token
-
       # Store the access token in a new variable
       $storedAccessToken = $bearerToken
-
-      echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
       $apiUrl2 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
-
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl2 -Method Get -Headers $headers
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-     
       $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
-
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      echo $dataValues
       # Request Body for this api
       $request = @{
           "ItemContent" = $secureContent
@@ -203,10 +194,7 @@ jobs:
           "CategoryId" = ${{ parameters.categodyID }}
           "ItemMetaInfo" = $dataValues
            }
-
       # Display the constructed request body
-      Write-Host "Request Body:"
-      Write-Host ($request | ConvertTo-Json -Depth 10)
       $requestBodyJson = $request | ConvertTo-Json -Depth 10
 
       # Send the GET request using the bearer token
