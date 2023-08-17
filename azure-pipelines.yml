@@ -128,24 +128,7 @@ jobs:
 
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
-
-      # Wait for a short interval before checking again
-      Start-Sleep -Seconds 10
       
-      # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
-      
-      # Wait for a short interval before checking again
-      Start-Sleep -Seconds 10
-      
-      # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
-
-      # Wait for a short interval before checking again
-      Start-Sleep -Seconds 10
-      
-      # Send the GET request using the bearer token
-      $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
       
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
