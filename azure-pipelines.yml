@@ -76,7 +76,7 @@ jobs:
       echo $(Idarray)
       $dashboardIdsArray = @()
       Write-Host "Input DashboardIDs: ${{ parameters.DashboardIDs }}"
-      Write-Host "Value of Idarray: $Idarray"
+      Write-Host "Value of Idarray: $(Idarray)"
 
       if (${{ parameters.DashboardIDs }} -eq "All") {
           $dashboardIdsArray = $Idarray -split ','
