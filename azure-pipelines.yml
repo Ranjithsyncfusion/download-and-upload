@@ -28,7 +28,7 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: | 
-      $apiUrl = "https://hotfix-docker.boldbi.com/bi/site/site1/token"  # URL to get bearer token
+      $apiUrl = "${{ parameters.sourcesitename }}/token"  # URL to get bearer token
       echo $apiUrl
       $credentials = @{
           grant_type = "password"
