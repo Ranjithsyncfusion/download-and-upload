@@ -80,14 +80,12 @@ jobs:
 
       if (${{ parameters.DashboardIDs }} -eq "All") {
           $dashboardIdsArray = $(Idarray) -split ','
+          $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { '"' + $_ + '"' }
       } else {
           $dashboardIdsArray = ${{ parameters.DashboardIDs }} -split ','
+          $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { '"' + $_ + '"' }
       }
-
-      # Add double quotes around each dashboard ID
-      $dashboardIdsArray = $dashboardIdsArray | ForEach-Object { '"' + $_ + '"' }
-
-      Write-Host "Final dashboardIdsArray: $dashboardIdsArray"
+      #Write-Host "Final dashboardIdsArray: $dashboardIdsArray"
 
       echo $dashboardIdsArray
 
