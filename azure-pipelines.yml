@@ -200,17 +200,8 @@ jobs:
           "Content-Type" = "application/json"
       }
       echo $dataValues
-      # Request Body for this api
-      $requestBody = @{
-          "FileContent" = $secureContent
-          "FileExtension" = "$(itemExtension)"
-          "CategoryId" = ${{ parameters.categodyID }},
-            "ItemMetaInfo" = [
-            {
-            $dataValues
-            }
-            ]
-        }
+      $dataJson = $dataValues | ConvertTo-Json -Depth 10
+      echo $dataJson
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Get -Headers $headers
 
