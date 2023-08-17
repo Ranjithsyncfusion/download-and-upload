@@ -224,6 +224,6 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      $response = Invoke-RestMethod -Uri $apiUrl4 -Method Post -Headers $headers 
+      $response = Invoke-RestMethod -Uri $apiUrl4 -Method Get -Headers $headers 
 
   displayName: 'Upload the dashboard'
