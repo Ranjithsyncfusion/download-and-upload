@@ -6,10 +6,10 @@
 parameters:
 - name: sourcesitename
   displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
-  type: string
+  #type: string
 - name: targetsitename
   displayName: Please enter the targetsite name like "https://<App_Base URL>/bi/site/<Site Name>"
-  type: string
+  #type: string
 - name: DashboardIDs
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
   type: string
