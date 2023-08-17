@@ -178,7 +178,7 @@ jobs:
       echo "$storedAccessToken"
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
       $apiUrl2 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/categories"  # Replace with your API endpoint
-      $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
+      $bearerToken = "$Bearertokentarget"  # Access the pipeline variable
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
@@ -195,7 +195,7 @@ jobs:
       $dataJson = $dataValues | ConvertTo-Json -Depth 10
       echo $dataJson
       $apiUrl3 = "https://hotfix-linux.boldbi.com/bi/api/site/test/v4.0/dashboards/upload"  # Replace with your API endpoint
-      $bearerToken = "$(Bearertokentarget)"  # Access the pipeline variable
+      $bearerToken = "$Bearertokentarget"  # Access the pipeline variable
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
