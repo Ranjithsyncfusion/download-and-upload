@@ -147,7 +147,8 @@ jobs:
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
       }
-
+      # store the properties of data
+      $dataValues = $response.Data
       # Convert the request body to JSON format
       $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
 
@@ -156,6 +157,8 @@ jobs:
 
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      # Display the stored Data values
+      Write-Host "Stored Data Values: $($dataValues | ConvertTo-Json -Depth 10)"
 
     displayName: 'Get Dashboard Details'
   - powershell: |
