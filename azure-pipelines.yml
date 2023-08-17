@@ -147,18 +147,17 @@ jobs:
           "FileContent" = $secureContent
           "FileExtension" = "$(itemExtension)"
       }
-      # store the properties of data
-      $dataValues = $response.Data.Data
       # Convert the request body to JSON format
       $requestBodyJson = $requestBody | ConvertTo-Json -Depth 10
 
       # Send the POST request using the bearer token and request body
       $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Headers $headers -Body $requestBodyJson
-
+      # Store the API response in a variable
+      $apiResponse = $response
       # Display the response
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       # Display the stored Data values
-      Write-Host "Stored Data Values: $($dataValues | ConvertTo-Json -Depth 10)"
+      Write-Host "API Response: $($apiResponse | ConvertTo-Json -Depth 10)"
 
     displayName: 'Get Dashboard Details'
   - powershell: |
