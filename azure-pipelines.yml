@@ -213,5 +213,5 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Post -Headers $headers -Body $requestBodyJson
 
       # Display the response
-      # Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
   displayName: 'Upload the dashboard'
