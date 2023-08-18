@@ -198,7 +198,7 @@ jobs:
            }
       # Display the constructed request body
       $requestBodyJson = $request | ConvertTo-Json -Depth 10
-
+      echo $requestBodyJson
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Post -Headers $headers -Body $requestBodyJson
 
