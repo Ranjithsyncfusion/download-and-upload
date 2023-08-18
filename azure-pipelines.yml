@@ -38,7 +38,6 @@ jobs:
   steps:
   - powershell: | 
       $apiUrl = "${{ parameters.sourcesitename }}/token"  # URL to get bearer token
-      echo $apiUrl
       $credentials = @{
           grant_type = "password"
           username = "${{ parameters.sourcesiteusername }}"
@@ -59,7 +58,7 @@ jobs:
     displayName: 'Get Bearer Token and Send POST Request for source machine'
      
   - powershell: |
-      $apiEndpoint = "${{ parameters.sourcesitename }}/v4.0/dashboards"  # API endpoint
+      $apiEndpoint = "${{ parameters.sourcesitename }}/v4.0/dashboards"  
       $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
       echo "$(Bearertoken)"
       $headers = @{
@@ -67,31 +66,34 @@ jobs:
       }
 
       try {
-          # Send the GET request using the bearer token
+          # Send the GET request using the bearer token for getting Dashboard ID's
           $response = Invoke-RestMethod -Uri $apiEndpoint -Method Get -Headers $headers
           Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       } catch {
           Write-Host "Error: $($_.Exception.Message)"
       }
-      # Extract the "Id" values from the response
+      # Extract the Dashboard "Id" values from the response
       $idsArray = @()
       foreach ($item in $response.Data) {
           $idsArray += $item.Id
       }
 
-      # Display the extracted IDs
+      # Display the extracted IDs in array format
       Write-Host "Extracted IDs: $($idsArray -join ',')"
       $Idarray = $($idsArray -join ',')
       echo $Idarray
       echo "##vso[task.setvariable variable=Idarray1]$Idarray"
-      $apiUrl1 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job"  # API endpoint
-      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+      # Assinging the dashboard download job API.
+      $apiUrl1 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job"  
+      $bearerToken = "$(Bearertoken)"  # Access the brear token
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
+      # declared an array for storing dashboards.
       $dashboardIdsArray = @()
+      # Checking if ${{ parameters.DashboardIDs }} contains "All" or "Dashboard ID's"
       if (${{ parameters.DashboardIDs }} -eq "All") {
           $dashboardIdsArray = $Idarray -split ','
           $dashboardIdsArray = $dashboardIdsArray -replace '^"|"$', '"$0"'
@@ -113,7 +115,7 @@ jobs:
       # Send the POST request using the bearer token and request body
       $response = Invoke-RestMethod -Uri $apiUrl1 -Method Post -Headers $headers -Body $requestBodyJson
 
-      # Display the response
+      # Display the response for download job id creation API.
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       # Extract the JobId from the response and store it in another variable
       $jobId = $response.Data.JobId
@@ -125,8 +127,8 @@ jobs:
 
     displayName: 'Get the JOB ID for downlaod the dashboard'
   - powershell: |
-      $apiUrl0 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job/$(jobid)"  # Replace with your API endpoint
-      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+      $apiUrl0 = "${{ parameters.sourcesitename }}/v4.0/dashboards/download/job/$(jobid)" 
+      $bearerToken = "$(Bearertoken)"  
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
@@ -139,20 +141,20 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl0 -Method Get -Headers $headers
       
       
-      # Display the response
+      # Display the response for the dashboard download API.
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-     
+      # Stored the $itemContent and $itemExtension for calling next API.
       $itemContent = $response.Data.ItemContent
       $itemExtension = $response.Data.ItemExtension
-
-      $apiUrl11 = "${{ parameters.sourcesitename }}/v4.0/dashboards/upload/meta"  # Replace with your API endpoint
-      $bearerToken = "$(Bearertoken)"  # Access the pipeline variable
+      # Assing a API for uplaod metadata of the dashboards.
+      $apiUrl11 = "${{ parameters.sourcesitename }}/v4.0/dashboards/upload/meta"  
+      $bearerToken = "$(Bearertoken)"  # Access the API with bearer token.
 
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
-      # Construct the request body
+      # Construct the request body for API.
       $requestBody = @{
           "FileContent" = $itemContent
           "FileExtension" = $itemExtension
@@ -164,9 +166,9 @@ jobs:
       $response = Invoke-RestMethod -Uri $apiUrl11 -Method Post -Headers $headers -Body $requestBodyJson
       # Extract the "Data" values and store them in a new variable
       $dataValues = $response.Data
-      # Display the response
+      # Display the response for the upload meta data API.
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-    
+      # Getting Bearer token for target machine. 
       $apiUrl1 = "${{ parameters.targetsitename }}/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
@@ -182,7 +184,8 @@ jobs:
       # Store the access token in a new variable
       $storedAccessToken = $bearerToken
       echo "##vso[task.setvariable variable=Bearertokentarget]$storedAccessToken"
-      $apiUrl2 = "${{ parameters.targetsitename }}/v4.0/categories"  # Replace with your API endpoint
+      #  Assign an API for get categories in target machine.
+      $apiUrl2 = "${{ parameters.targetsitename }}/v4.0/categories"  
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
@@ -190,10 +193,11 @@ jobs:
       }
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl2 -Method Get -Headers $headers
-      # Display the response
+      # Display the response for get categories API.
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-      $apiUrl3 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload"  # Replace with your API endpoint
-      $bearerToken = "$storedAccessToken"  # Access the pipeline variable
+      # Assign a API for dashboard download job ID creation.
+      $apiUrl3 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload"  
+      $bearerToken = "$storedAccessToken"  
       $headers = @{
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
@@ -211,12 +215,13 @@ jobs:
       # Send the GET request using the bearer token
       $response = Invoke-RestMethod -Uri $apiUrl3 -Method Post -Headers $headers -Body $requestBodyJson
 
-      # Display the response
+      # Display the response for dashboard upload API.
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
-      # Extract the Job ID
+      # Extract the Job ID 
       $jobId = $response.Data.JobId
       echo  $jobId
-      $apiUrl4 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload/job/$jobId"  # Replace with your API endpoint
+      # Run the API for find upload status.
+      $apiUrl4 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload/job/$jobId"
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
 
       $headers = @{
