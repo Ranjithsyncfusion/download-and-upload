@@ -17,10 +17,10 @@ parameters:
   displayName: Please enter the targetsite name like "https://<App_Base URL>/bi/site/<Site Name>"
   type: string
 - name: targetsiteusername
-  displayName: Please enter the Admin User of the source site.
+  displayName: Please enter the Admin User of the target site.
   type: string
 - name: targetsitepassword
-  displayName: Please enter the Admin User password of the source site.
+  displayName: Please enter the Admin User password of the target site.
   type: string
 - name: DashboardIDs
   displayName: Please enter the dashboard IDs (comma-separated). Enter "All" for all dashboards.
