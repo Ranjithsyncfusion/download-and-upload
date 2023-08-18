@@ -218,4 +218,12 @@ jobs:
       Start-Sleep -Seconds 10
       $response = Invoke-RestMethod -Uri $apiUrl4 -Method Get -Headers $headers 
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+
+      Start-Sleep -Seconds 10
+      $response = Invoke-RestMethod -Uri $apiUrl4 -Method Get -Headers $headers 
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
+
+      Start-Sleep -Seconds 10
+      $response = Invoke-RestMethod -Uri $apiUrl4 -Method Get -Headers $headers 
+      Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
   displayName: 'Upload the dashboard'
