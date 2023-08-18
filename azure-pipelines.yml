@@ -8,7 +8,7 @@ parameters:
   displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
   type: string
 - name: sourcesiteusername
-  displayName: Please enter the Admin User of the source site.
+  displayName: Please enter the Admin User name of the source site.
   type: string
 - name: sourcesitepassword
   displayName: Please enter the Admin User password of the source site.
@@ -17,7 +17,7 @@ parameters:
   displayName: Please enter the targetsite name like "https://<App_Base URL>/bi/site/<Site Name>"
   type: string
 - name: targetsiteusername
-  displayName: Please enter the Admin User of the target site.
+  displayName: Please enter the Admin User name of the target site.
   type: string
 - name: targetsitepassword
   displayName: Please enter the Admin User password of the target site.
