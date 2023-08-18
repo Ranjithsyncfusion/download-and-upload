@@ -206,7 +206,7 @@ jobs:
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
       # Extract the Job ID
       $jobId = $response.Data.JobId
-      
+      echo  $jobId
       $apiUrl4 = "${{ parameters.targetsitename }}/v4.0/dashboards/upload/job/$jobId"  # Replace with your API endpoint
       $bearerToken = "$storedAccessToken"  # Access the pipeline variable
 
