@@ -3,6 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+# Declaring parameter variables.
 parameters:
 - name: sourcesitename
   displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
@@ -29,6 +30,7 @@ parameters:
 - name: categodyID
   displayName: Please enter the catogory ID of target machine.
   type: string
+
 pool:
   vmImage: Windows-latest
 
@@ -37,7 +39,8 @@ jobs:
 - job: GetBearerToken
   steps:
   - powershell: | 
-      $apiUrl = "${{ parameters.sourcesitename }}/token"  # URL to get bearer token
+      # Getting Bearer token for source machine.
+      $apiUrl = "${{ parameters.sourcesitename }}/token"
       $credentials = @{
           grant_type = "password"
           username = "${{ parameters.sourcesiteusername }}"
