@@ -6,7 +6,7 @@
 # Declaring parameter variables.
 parameters:
 - name: sourcesitename
-  displayName: Please enter the sourcesite name like "https://<App_Base URL>/bi/site/<Site Name>"
+  displayName: Please enter the sourcesite name with site identifier "https://<App_Base URL>/bi/site/<site identifier>"
   type: string
 - name: sourcesiteusername
   displayName: Please enter the Admin User name of the source site.
