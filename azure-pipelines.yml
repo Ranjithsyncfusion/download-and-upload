@@ -27,7 +27,7 @@ parameters:
   type: string
   default: All
 - name: categodyID
-  displayName: Please enter the catogory ID.
+  displayName: Please enter the catogory ID of target machine.
   type: string
 pool:
   vmImage: Windows-latest
