@@ -170,8 +170,8 @@ jobs:
       $apiUrl1 = "${{ parameters.targetsitename }}/token"  # URL to get bearer token
       $credentials = @{
           grant_type = "password"
-          username = "admin"
-          password = "Admin@123"
+          username = "${{ parameters.targetsiteusername }}"
+          password = "${{ parameters.targetsitepassword }}"
       }
       
       $tokenResponse = Invoke-RestMethod -Uri $apiUrl1 -Method Post -Body $credentials
