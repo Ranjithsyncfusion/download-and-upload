@@ -214,6 +214,8 @@ jobs:
           "Authorization" = "Bearer $bearerToken"
           "Content-Type" = "application/json"
       }
+      # Wait for a short interval before checking again
+      Start-Sleep -Seconds 10
       $response = Invoke-RestMethod -Uri $apiUrl4 -Method Get -Headers $headers 
       Write-Host "API Response: $($response | ConvertTo-Json -Depth 10)"
   displayName: 'Upload the dashboard'
