@@ -1,19 +1,33 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-- main
+variables:
+- group: Nexus  # Ensure this variable group contains your ServiceBusConnectionString variable
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    python -m pip install azure-servicebus
+  displayName: 'Install Azure Service Bus SDK'
+
+- script: |
+    import os
+    from azure.servicebus import ServiceBusClient, ServiceBusMessage
+
+    connection_str = os.environ["SERVICE_BUS_CONNECTION_STRING"]
+    queue_name = "your-queue-name"
+
+    servicebus_client = ServiceBusClient.from_connection_string(conn_str=connection_str, logging_enable=True)
+    with servicebus_client:
+        sender = servicebus_client.get_queue_sender(queue_name=queue_name)
+        with sender:
+            message = ServiceBusMessage("Hello, world!")
+            sender.send_messages(message)
+    print("Message sent")
+  env:
+    SERVICE_BUS_CONNECTION_STRING: $(ServiceBusConnectionString)
+  displayName: 'Queue a message in Azure Service Bus'
