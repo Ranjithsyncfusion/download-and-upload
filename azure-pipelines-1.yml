@@ -1,6 +1,3 @@
-variables:
-- group: Nexus  # Ensure this variable group contains your ServiceBusConnectionString variable
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -19,7 +16,7 @@ steps:
     from azure.servicebus import ServiceBusClient, ServiceBusMessage
 
     connection_str = os.environ["SERVICE_BUS_CONNECTION_STRING"]
-    queue_name = "your-queue-name"
+    queue_name = "testingpipeline"
 
     servicebus_client = ServiceBusClient.from_connection_string(conn_str=connection_str, logging_enable=True)
     with servicebus_client:
