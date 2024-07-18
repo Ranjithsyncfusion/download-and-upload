@@ -11,6 +11,13 @@ steps:
     python -m pip install azure-servicebus
   displayName: 'Install Azure Service Bus SDK'
 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
+    scriptType: 'batch'
+    scriptLocation: 'scriptPath'
+    scriptPath: '.bat'
+
 - script: |
     import os
     from azure.servicebus import ServiceBusClient, ServiceBusMessage
