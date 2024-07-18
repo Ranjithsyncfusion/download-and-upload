@@ -11,8 +11,9 @@ jobs:
       azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
-      inlineScript: 'az servicebus queue'
-      arguments: '--resource-group bus --namespace-name ranjithtesting --queue-name ranjith --message-body "Message vandhruchae"'
+      inlineScript: |
+        az extension add --name servicebus
+        az servicebus message send --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --body "Message vandhruchae"
     
   # - task: PublishToAzureServiceBus@2
   #   inputs:
