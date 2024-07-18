@@ -1,24 +1,16 @@
 pool:
-  vmImage: 'ubuntu-latest'
-
+ vmImage: 'ubuntu-latest'
 steps:
-
 - script: |
-    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    az login 
-    az account set --subscription d85cca03-706a-4ff7-81bf-d0a90d9bc685
-    SERVICE_BUS_CONNECTION_STRING="$(ServiceBusConnectionString)"
-    QUEUE_NAME="testingpipeline"
-    MESSAGE_CONTENT="successfully message ah anupiten"
-
-    # Send message to Service Bus queue
-    az servicebus message send --queue-name $QUEUE_NAME --body "$MESSAGE_CONTENT" --connection-string "$SERVICE_BUS_CONNECTION_STRING"
-
-    if [ $? -eq 0 ]; then
-        echo "Message sent successfully to queue: $QUEUE_NAME"
-    else
-        echo "Failed to send message to queue: $QUEUE_NAME"
-    fi
-  env:
-    SERVICE_BUS_CONNECTION_STRING: $(ServiceBusConnectionString)
+    echo"sdfsfsfsfc"
   displayName: 'Queue a message in Azure Service Bus'
+- task: PublishToAzureServiceBus@2
+  inputs:
+    azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
+    serviceBusQueueName: 'ranjith'
+    serviceBusNamespace: 'ranjithrtesting'
+    messageBody: 'Message vandhruchae'
+    signPayload: false
+    waitForCompletion: true
+    useDataContractSerializer: true
+  
