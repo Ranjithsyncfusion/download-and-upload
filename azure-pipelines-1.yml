@@ -12,8 +12,9 @@ jobs:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az extension add --name servicebus
-        az servicebus message send --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --body "Message vandhruchae"
+        az extension add --name azure-servicebus --allow-preview
+        az servicebus queue message send --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --body "Message vandhruchae"
+
     
   # - task: PublishToAzureServiceBus@2
   #   inputs:
