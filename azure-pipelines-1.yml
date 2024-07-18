@@ -10,8 +10,4 @@ jobs:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az servicebus queue send \
-          --resource-group bus \
-          --namespace-name ranjithtesting \
-          --queue-name ranjith \
-          --message-body "Message vandhruchae"
+        az servicebus queue sent --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --message-body "Message vandhruchae"
