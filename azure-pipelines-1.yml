@@ -10,10 +10,8 @@ jobs:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        # Azure CLI commands to publish to Azure Service Bus
-        az servicebus queue send --namespace-name ranjithtesting --queue-name ranjith --message-body "Message vandhruchae" --sign-payload false --data-contract-serializer false
-
-
-  
-
-  
+        az servicebus queue send \
+          --resource-group YourResourceGroup \
+          --namespace-name ranjithtesting \
+          --queue-name ranjith \
+          --message-body "Message vandhruchae"
