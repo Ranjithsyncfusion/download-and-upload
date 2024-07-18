@@ -1,4 +1,9 @@
 jobs:
+- job: ExampleJob1
+  steps:
+    - script: 
+       echo:"modnienc"
+
 - job: ExampleJob
   displayName: 'Publish to Azure Service Bus'
   pool:
@@ -11,3 +16,20 @@ jobs:
       scriptLocation: 'inlineScript'
       inlineScript: |
         az servicebus queue sent --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --message-body "Message vandhruchae"
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az servicebus queue send'
+      arguments: '--resource-group bus --namespace-name ranjithtesting --queue-name ranjith --message-body "Message vandhruchae"'
+    
+  # - task: PublishToAzureServiceBus@2
+  #   inputs:
+  #     azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
+  #     serviceBusQueueName: 'ranjith'
+  #     serviceBusNamespace: 'ranjithrtesting'
+  #     messageBody: 'cvjj'
+  #     signPayload: false
+  #     waitForCompletion: false
+  #     useDataContractSerializer: false
