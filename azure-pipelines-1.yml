@@ -2,15 +2,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-    addToPath: true
 
 - script: |
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    az login
-    SERVICE_BUS_CONNECTION_STRING=$(ServiceBusConnectionString)
+    az login 
+    az account set --subscription d85cca03-706a-4ff7-81bf-d0a90d9bc685
+    SERVICE_BUS_CONNECTION_STRING="$(ServiceBusConnectionString)"
     QUEUE_NAME="testingpipeline"
     MESSAGE_CONTENT="successfully message ah anupiten"
 
