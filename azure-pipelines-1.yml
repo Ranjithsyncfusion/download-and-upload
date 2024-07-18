@@ -11,7 +11,7 @@ jobs:
       scriptLocation: 'inlineScript'
       inlineScript: |
         az servicebus queue send \
-          --resource-group YourResourceGroup \
+          --resource-group bus \
           --namespace-name ranjithtesting \
           --queue-name ranjith \
           --message-body "Message vandhruchae"
