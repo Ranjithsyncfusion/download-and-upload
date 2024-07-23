@@ -6,6 +6,11 @@ jobs:
     vmImage: 'ubuntu-latest'  # Use an appropriate Ubuntu version
   steps:
   
+  - task: GitHubComment@0
+    inputs:
+      gitHubConnection: 'bold-bi'
+      repositoryName: '$(Build.Repository.Name)'
+      comment: 'all is well'
   - task: AzureCLI@2
     inputs:
       azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
