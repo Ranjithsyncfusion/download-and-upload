@@ -6,27 +6,27 @@ jobs:
     vmImage: 'ubuntu-latest'  # Use an appropriate Ubuntu version
   steps:
   
-  - task: GitHubComment@0
+  - task: PythonScript@0
     inputs:
-      gitHubConnection: 'bold-bi'
-      repositoryName: '$(Build.Repository.Name)'
-      comment: 'all is well'
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az extension add --name azure-servicebus --allow-preview
-        az servicebus queue message send --resource-group bus --namespace-name ranjithtesting --queue-name ranjith --body "Message vandhruchae"
-
-    
-  # - task: PublishToAzureServiceBus@2
-  #   inputs:
-  #     azureSubscription: 'SF3358-Bold BI-DevOps-Ranjithkumar(d85cca03-706a-4ff7-81bf-d0a90d9bc685)'
-  #     serviceBusQueueName: 'ranjith'
-  #     serviceBusNamespace: 'ranjithrtesting'
-  #     messageBody: 'cvjj'
-  #     signPayload: false
-  #     waitForCompletion: false
-  #     useDataContractSerializer: false
+      scriptSource: 'inline'
+      script: |
+        from azure.servicebus import ServiceBusClient
+        from azure.servicebus import ServiceBusMessage
+        
+        connection_str = $(connectionstring)
+        queue_name = "testingpipeline"
+        
+        def send_message_to_queue (connection_str, queue_name):
+            servicebus_client = ServiceBusClient.from_connection_string(conn_str=connection_str)
+            sender = servicebus_client.get_queue_sender(queue_name=queue_name)
+            message = ServiceBusMessage("Hello world 002")
+            sender.send_messages (message)
+            sender.close()
+            servicebus_client.close()
+        
+            return "Message sent successfully"
+        
+        if __name__ == '__main__':
+            result = send_message_to_queue(connection_str, queue_name)
+        print(result)
+        # See PyCharm help at https://www.jetbrains.com/help/pycharm/
