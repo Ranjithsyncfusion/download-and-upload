@@ -13,7 +13,7 @@ jobs:
         from azure.servicebus import ServiceBusClient
         from azure.servicebus import ServiceBusMessage
         
-        connection_str = $(connectionstring)
+        connection_str = "$(connectionstring)"
         queue_name = "testingpipeline"
         
         def send_message_to_queue (connection_str, queue_name):
