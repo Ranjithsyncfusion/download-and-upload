@@ -13,3 +13,12 @@ jobs:
         waitForCompletion: false
         useDataContractSerializer: true
         signatureKey: '$(buskey)'
+    - task: PublishToAzureServiceBus@2
+      inputs:
+        azureSubscription: 'Ranjithazurebusre'
+        serviceBusQueueName: 'testingpipeline'
+        serviceBusNamespace: 'azurebusrk'
+        messageBody: 'noenwnnen'
+        signPayload: false
+        waitForCompletion: false
+        useDataContractSerializer: true
