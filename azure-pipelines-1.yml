@@ -48,17 +48,17 @@ jobs:
         queue_name = "testingpipeline"
         
         def receive_messages_from_queue(conn_str, queue_name):
-        # Create a service bus client with the connection string
-        servicebus_client = ServiceBusClient.from_connection_string(conn_str=conn_str)
-        receiver = servicebus_client.get_queue_receiver (queue_name=queue_name)
-        with receiver:
-            received_messages = []
-            for message in receiver:
-                print("Received message:", message)
-                received_messages.append(str(message))
-                # Complete the message to remove it from the queue
-                receiver.complete_message(message)
-            return received_messages
+            # Create a service bus client with the connection string
+            servicebus_client = ServiceBusClient.from_connection_string(conn_str=conn_str)
+            receiver = servicebus_client.get_queue_receiver (queue_name=queue_name)
+            with receiver:
+                received_messages = []
+                for message in receiver:
+                    print("Received message:", message)
+                    received_messages.append(str(message))
+                    # Complete the message to remove it from the queue
+                    receiver.complete_message(message)
+                return received_messages
         
         if __name__ == '__main__':
             result = receive_messages_from_queue(connection_str, queue_name)
