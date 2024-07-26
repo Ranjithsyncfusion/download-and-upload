@@ -53,6 +53,8 @@ jobs:
             receiver = servicebus_client.get_queue_receiver (queue_name=queue_name)
             with receiver:
                 for message in receiver:
+                    return "Message fetched successfully"
+                   
                     print(message)
                     # Complete the message to remove it from the queue
                     receiver.complete_message(message)
