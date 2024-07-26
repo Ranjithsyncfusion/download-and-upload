@@ -7,7 +7,7 @@ jobs:
       inputs:
         azureSubscription: 'Ranjithazurebusre'
         serviceBusQueueName: 'azurebusrk.servicebus.windows.net/testingpipeline'
-        serviceBusNamespace: 'azurebusrk.servicebus.windows.net'
+        serviceBusNamespace: 'azurebusrk'
         messageBody: 'noenwnnen'
         signPayload: false
         waitForCompletion: false
