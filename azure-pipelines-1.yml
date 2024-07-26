@@ -1,9 +1,8 @@
 jobs:
-
 - job: ExampleJob
   displayName: 'Publish to Azure Service Bus'
   pool:
-    vmImage: 'ubuntu-latest'  # Use an appropriate Ubuntu version
+   vmImage: 'ubuntu-latest'
   steps:
   - task: UsePythonVersion@0
     inputs:
@@ -78,3 +77,16 @@ jobs:
             logging.info(f"Result: {result}")
             print(result)
 
+- job: ExampleJob1
+  displayName: 'Publish to Azure Service Bus'
+  pool: server
+  steps:
+    - task: PublishToAzureServiceBus@2
+      inputs:
+        azureSubscription: 'Ranjithazurebusre'
+        serviceBusQueueName: 'testingpipeline'
+        serviceBusNamespace: 'azurebusrk'
+        messageBody: 'noenwnnen'
+        signPayload: false
+        waitForCompletion: false
+        useDataContractSerializer: true
