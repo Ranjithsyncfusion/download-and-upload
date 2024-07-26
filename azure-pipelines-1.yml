@@ -6,10 +6,9 @@ jobs:
     - task: PublishToAzureServiceBus@2
       inputs:
         azureSubscription: 'Ranjithazurebusre'
-        serviceBusQueueName: 'https://azurebusrk.servicebus.windows.net/testingpipeline'
-        serviceBusNamespace: 'https://azurebusrk.servicebus.windows.net'
+        serviceBusQueueName: 'azurebusrk.servicebus.windows.net/testingpipeline'
+        serviceBusNamespace: 'azurebusrk.servicebus.windows.net'
         messageBody: 'noenwnnen'
         signPayload: false
         waitForCompletion: false
         useDataContractSerializer: true
-        
