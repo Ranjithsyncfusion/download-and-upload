@@ -10,6 +10,6 @@ jobs:
         serviceBusNamespace: 'azurebusrk'
         messageBody: 'noenwnnen'
         signPayload: false
-        waitForCompletion: true
+        waitForCompletion: false
         useDataContractSerializer: false
     
