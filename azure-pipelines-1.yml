@@ -10,7 +10,6 @@ jobs:
         serviceBusNamespace: 'azurebusrk'
         messageBody: 'noenwnnen'
         signPayload: false
-        waitForCompletion: false
-        useDataContractSerializer: true
-        signatureKey: '$(buskey)'
+        waitForCompletion: true
+        useDataContractSerializer: false
     
