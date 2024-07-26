@@ -44,9 +44,6 @@ jobs:
         from azure.servicebus import ServiceBusClient, ServiceBusMessage
         import logging
 
-        # Configure logging
-        logging.basicConfig(level=logging.INFO)
-
         connection_str = "$(connectionstring)"
         queue_name = "testingpipeline"
 
