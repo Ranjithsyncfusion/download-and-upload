@@ -36,6 +36,29 @@ jobs:
         if __name__ == '__main__':
             result = send_message_to_queue(connection_str, queue_name)
         print(result)
-        # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
-    
+  - task: PythonScript@0
+    inputs:
+      scriptSource: 'inline'
+      script: |
+        from azure.servicebus import ServiceBusClient
+        from azure.servicebus import ServiceBusMessage
+        
+        connection_str = "$(connectionstring)"
+        queue_name = "testingpipeline"
+        
+        def receive_messages_from_queue(conn_str, queue_name):
+        # Create a service bus client with the connection string
+            servicebus_client = ServiceBusClient.from_connection_string(conn_str=conn_str)
+            receiver = servicebus_client.get_queue_receiver (queue_name=queue_name)
+            with receiver:
+                for message in receiver:
+                    print(message)
+                    # Complete the message to remove it from the queue
+                    receiver.complete_message(message)
+                    # Close the service bus client when done
+                    servicebus_client.close()
+        
+        if __name__ == '__main__':
+            result = receive_messages_from_queue(connection_str, queue_name)
+        print(result)
