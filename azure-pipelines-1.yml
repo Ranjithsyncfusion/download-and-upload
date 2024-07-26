@@ -37,3 +37,5 @@ jobs:
             result = send_message_to_queue(connection_str, queue_name)
         print(result)
         # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+    
