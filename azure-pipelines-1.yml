@@ -27,6 +27,8 @@ jobs:
             servicebus_client = ServiceBusClient.from_connection_string(conn_str=connection_str)
             sender = servicebus_client.get_queue_sender(queue_name=queue_name)
             message = ServiceBusMessage("Hello world 002")
+            message = ServiceBusMessage("Hello world 003")
+            message = ServiceBusMessage("Hello world 004")
             sender.send_messages (message)
             sender.close()
             servicebus_client.close()
