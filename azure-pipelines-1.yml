@@ -41,25 +41,39 @@ jobs:
     inputs:
       scriptSource: 'inline'
       script: |
-        from azure.servicebus import ServiceBusClient
-        from azure.servicebus import ServiceBusMessage
-        
+        from azure.servicebus import ServiceBusClient, ServiceBusMessage
+        import logging
+
+        # Configure logging
+        logging.basicConfig(level=logging.INFO)
+
         connection_str = "$(connectionstring)"
         queue_name = "testingpipeline"
-        
-        def receive_messages_from_queue(conn_str, queue_name):
+
+        def receive_messages_from_queue(conn_str, queue_name, max_wait_time=5):
             # Create a service bus client with the connection string
             servicebus_client = ServiceBusClient.from_connection_string(conn_str=conn_str)
-            receiver = servicebus_client.get_queue_receiver (queue_name=queue_name)
+            receiver = servicebus_client.get_queue_receiver(queue_name=queue_name)
+            received_messages = []
+            
             with receiver:
-                received_messages = []
-                for message in receiver:
-                    print("Received message:", message)
+                logging.info("Waiting for messages...")
+                messages = receiver.receive_messages(max_wait_time=max_wait_time)
+                
+                if not messages:
+                    logging.info("No messages received within the timeout period.")
+                
+                for message in messages:
+                    logging.info(f"Received message: {message}")
                     received_messages.append(str(message))
                     # Complete the message to remove it from the queue
                     receiver.complete_message(message)
-                return received_messages
-        
+            
+            servicebus_client.close()
+            return received_messages
+
         if __name__ == '__main__':
             result = receive_messages_from_queue(connection_str, queue_name)
+            logging.info(f"Result: {result}")
             print(result)
+
