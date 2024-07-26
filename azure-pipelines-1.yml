@@ -57,7 +57,7 @@ jobs:
                     # Complete the message to remove it from the queue
                     receiver.complete_message(message)
                     # Close the service bus client when done
-                    servicebus_client.close()
+            servicebus_client.close()
         
         if __name__ == '__main__':
             result = receive_messages_from_queue(connection_str, queue_name)
