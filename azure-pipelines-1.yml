@@ -12,3 +12,4 @@ jobs:
         signPayload: false
         waitForCompletion: false
         useDataContractSerializer: true
+        signatureKey: '$(buskey)'
