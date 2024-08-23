@@ -22,6 +22,7 @@ steps:
     exit 1
   displayName: 'Run a 3'
   name: task_3
+  continueOnError: true
 - script: |
     echo "Checking for failed tasks..."
     
