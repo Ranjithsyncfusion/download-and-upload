@@ -17,9 +17,8 @@ steps:
   displayName: 'Run a 2'
   name: task_2
 - script: |
-    echo "Hello, World!"
-    echo "This is a sample script task."
-    exit 1
+    cd $(Agent.TempDirectory)
+    ls
   displayName: 'Run a 3'
   name: task_3
   continueOnError: true
