@@ -25,30 +25,28 @@ steps:
   continueOnError: true
 - script: |
     echo "Checking for failed tasks..."
+
+    failedTasks=()
     
-    $failedTasks = @()
-    
-    $tasks = (Get-Content env:AGENT_JOBSTATUS)
-    if ($tasks -ne "Succeeded") {
+    # Check for failed tasks using the AGENT_JOBSTATUS environment variable
+    if [[ "$(echo $AGENT_JOBSTATUS)" != "Succeeded" ]]; then
         echo "Some tasks failed. Checking details..."
+        
+        taskLogs=$(find $(Agent.TempDirectory) -name "*.log" -type f)
+        
+        for logFile in $taskLogs; do
+            if grep -q "##vso[task.logissue type=error]" "$logFile"; then
+                failedTaskName=$(basename "$logFile" .log)
+                failedTasks+=("$failedTaskName")
+            fi
+        done
+    fi
 
-        $taskLogs = Get-ChildItem -Path "$(Agent.TempDirectory)" -Filter "*.log" -Recurse
-
-        foreach ($logFile in $taskLogs) {
-            $content = Get-Content -Path $logFile.FullName
-            if ($content -contains '##vso[task.logissue type=error]') {
-                $failedTaskName = $logFile.Name.Replace(".log", "")
-                $failedTasks += $failedTaskName
-            }
-        }
-    }
-
-    if ($failedTasks.Count -eq 0) {
+    if [ ${#failedTasks[@]} -eq 0 ]; then
         echo "No tasks failed."
-    } else {
-        echo "The following tasks failed: $($failedTasks -join ', ')"
+    else
+        echo "The following tasks failed: ${failedTasks[*]}"
         exit 1
-    }
+    fi
   displayName: 'Check for Failed Tasks'
-
 
