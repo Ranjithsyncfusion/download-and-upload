@@ -1,16 +1,53 @@
-jobs:
-- job: ExampleJob1
-  displayName: 'Publish to Azure Service Bus'
-  pool: server
-  steps:
-    - task: PublishToAzureServiceBus@2
-      inputs:
-        azureSubscription: 'Ranjithazurebusre'
-        serviceBusQueueName: 'testingpipeline'
-        serviceBusNamespace: 'azurebusrk'
-        messageBody: 'noenwnnen'
-        signPayload: false
-        waitForCompletion: false
-        useDataContractSerializer: false
+# Sample Azure Pipeline YAML with one script task
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
+  displayName: 'Run a 1'
+  name: taks_1
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
+  displayName: 'Run a 2'
+  name: task_2
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
+    exit 1
+  displayName: 'Run a 3'
+  name: task_3
+- script: |
+    echo "Checking for failed tasks..."
     
+    $failedTasks = @()
     
+    $tasks = (Get-Content env:AGENT_JOBSTATUS)
+    if ($tasks -ne "Succeeded") {
+        echo "Some tasks failed. Checking details..."
+
+        $taskLogs = Get-ChildItem -Path "$(Agent.TempDirectory)" -Filter "*.log" -Recurse
+
+        foreach ($logFile in $taskLogs) {
+            $content = Get-Content -Path $logFile.FullName
+            if ($content -contains '##vso[task.logissue type=error]') {
+                $failedTaskName = $logFile.Name.Replace(".log", "")
+                $failedTasks += $failedTaskName
+            }
+        }
+    }
+
+    if ($failedTasks.Count -eq 0) {
+        echo "No tasks failed."
+    } else {
+        echo "The following tasks failed: $($failedTasks -join ', ')"
+        exit 1
+    }
+  displayName: 'Check for Failed Tasks'
+
+
