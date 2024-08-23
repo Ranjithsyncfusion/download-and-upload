@@ -18,6 +18,7 @@ steps:
     exit 1
   displayName: 'Run a 2'
   name: task_2
+  continueOnError: true
 - script: |
     cd $(Agent.TempDirectory)
     ls
