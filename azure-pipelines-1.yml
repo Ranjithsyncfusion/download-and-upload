@@ -12,6 +12,7 @@ steps:
     exit  1
   displayName: 'Run a 1'
   name: taks_1
+  continueOnError: true
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
@@ -24,7 +25,7 @@ steps:
     ls
   displayName: 'Run a 3'
   name: task_3
-  continueOnError: true
+  condition: always()
 - script: |
     echo "Checking for failed tasks..."
 
