@@ -9,11 +9,13 @@ steps:
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
+    exit  1
   displayName: 'Run a 1'
   name: taks_1
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
+    exit 1
   displayName: 'Run a 2'
   name: task_2
 - script: |
