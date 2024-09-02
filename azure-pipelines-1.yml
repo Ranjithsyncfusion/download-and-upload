@@ -27,6 +27,12 @@ steps:
   name: task_3
   condition: always()
 - script: |
+      # Publish logs from a specified directory
+      echo "Publishing logs as artifacts"
+      mkdir -p $(Pipeline.Workspace)/logs
+      cp -r $(Agent.TempDirectory)/* $(Pipeline.Workspace)/logs/
+  name: CollectLogs
+- script: |
     echo "Checking for failed tasks..."
 
     failedTasks=()
