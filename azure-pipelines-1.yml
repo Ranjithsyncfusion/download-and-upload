@@ -21,7 +21,13 @@ steps:
   name: task_2
   continueOnError: true
 - script: |
-    cd $(Agent.WorkFolder)
+    cd $(Agent.WorkFolder)/1
+    ls
+    cd $(Agent.WorkFolder)/SourceRootMapping
+    ls
+    cd $(Agent.WorkFolder)/_tasks
+    ls
+    cd $(Agent.WorkFolder)/_temp
     ls
   displayName: 'Run a 3'
   name: task_3
