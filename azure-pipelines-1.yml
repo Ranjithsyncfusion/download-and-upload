@@ -21,7 +21,7 @@ steps:
   name: task_2
   continueOnError: true
 - script: |
-    $(Agent.WorkFolder)
+    cd $(Agent.WorkFolder)
     ls
   displayName: 'Run a 3'
   name: task_3
