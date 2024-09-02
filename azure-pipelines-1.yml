@@ -21,11 +21,11 @@ steps:
   name: task_2
   continueOnError: true
 - script: |
-    cd $(Agent.WorkFolder)/1
+    cd $(Agent.WorkFolder)/1/a
     ls
-    cd $(Agent.WorkFolder)/SourceRootMapping
+    cd $(Agent.WorkFolder)/1/s
     ls
-    cd $(Agent.WorkFolder)/_tasks
+    cd $(Agent.WorkFolder)/1/b
     ls
     cd $(Agent.WorkFolder)/_temp
     ls
