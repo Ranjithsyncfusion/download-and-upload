@@ -9,7 +9,7 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     if [ $? -ne 0 ]; then
-        globalVariableName: 'Run a 1'
+        globalVariableName='Run a 1'
     fi
   displayName: 'Run a 1'
 - script: |
@@ -17,7 +17,7 @@ steps:
     echo "This is a sample script task."
     echo $(globalVariableName)
     if [ $? -ne 0 ]; then
-        globalVariableName: 'Run a 2'
+        globalVariableName='Run a 2'
     fi
     exit 1
   displayName: 'Run a 2'
@@ -25,7 +25,7 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     if [ $? -ne 0 ]; then
-        globalVariableName: 'Run a 3'
+        globalVariableName='Run a 3'
     fi
   displayName: 'Run a 3'
 - script: |
