@@ -19,6 +19,9 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     
+    # Simulate yet another failure
+    yetAnotherCommandThatFails || exitCode=$?
+    
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
         echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
