@@ -8,9 +8,6 @@ steps:
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
-    
-    # Simulate a failure condition for demonstration
-    someCommandThatFails || exitCode=$?
 
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
@@ -22,9 +19,6 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     
-    # Simulate another failure
-    someOtherCommandThatFails || exitCode=$?
-    
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
         echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
@@ -35,10 +29,6 @@ steps:
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
-    
-    # Simulate yet another failure
-    yetAnotherCommandThatFails || exitCode=$?
-
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
         echo "##vso[task.setvariable variable=globalVariableName]Task 3 is failed"
@@ -60,8 +50,6 @@ steps:
 
 - script: |
     echo "Checking for failed tasks..."
-
-    # Logic to identify failed tasks (note: this part is not necessary if we use the global variable correctly)
     if [ -n "$(globalVariableName)" ]; then
         echo "The following task failed: $(globalVariableName)"
         exit 1
