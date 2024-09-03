@@ -1,16 +1,64 @@
-jobs:
-- job: ExampleJob1
-  displayName: 'Publish to Azure Service Bus'
-  pool: server
-  steps:
-    - task: PublishToAzureServiceBus@2
-      inputs:
-        azureSubscription: 'Ranjithazurebusre'
-        serviceBusQueueName: 'testingpipeline'
-        serviceBusNamespace: 'azurebusrk'
-        messageBody: 'noenwnnen'
-        signPayload: false
-        waitForCompletion: false
-        useDataContractSerializer: false
+variables:
+  globalVariableName: ''  # Declare the global variable without an initial value
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
+
+    # Check if the task failed
+    if [ $? -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
+        exit 1
+    fi
+  displayName: 'Run a 1'
+
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
     
+    # Simulate yet another failure
+    yetAnotherCommandThatFails || exitCode=$?
+
+    echo "This is a sample script task."
     
+    if [ $? -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
+        exit 1
+    fi
+  displayName: 'Run a 2'
+
+- script: |
+    echo "Hello, World!"
+    echo "This is a sample script task."
+    # Check if the task failed
+    if [ $? -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
+        exit 1
+    fi
+  displayName: 'Run a 3'
+
+- script: |
+    echo "Failed task name is: $(globalVariableName)."
+  displayName: 'Run a 4'
+  condition: always()  # Run this task regardless of previous task success/failure
+
+- script: |
+    # Publish logs from a specified directory
+    echo "Publishing logs as artifacts"
+    mkdir -p $(Pipeline.Workspace)/logs
+    cp -r $(Agent.TempDirectory)/* $(Pipeline.Workspace)/logs/
+  displayName: 'Collect Logs'
+
+- script: |
+    echo "Checking for failed tasks..."
+    if [ -n "$(globalVariableName)" ]; then
+        echo "The following task failed: $(globalVariableName)"
+        exit 1
+    else:
+        echo "No tasks failed."
+    fi
+  displayName: 'Check for Failed Tasks'
