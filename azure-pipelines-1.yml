@@ -10,8 +10,9 @@ steps:
     echo "This is a sample script task."
 
     # Check if the task failed
-    if [ "$exitCode" -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]Task 1 is failed"
+    if [ $? -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
+        exit 1
     fi
   displayName: 'Run a 1'
 
@@ -21,11 +22,12 @@ steps:
     
     # Simulate yet another failure
     yetAnotherCommandThatFails || exitCode=$?
+
+    echo "This is a sample script task."
     
-    # Check if the task failed
-    if [ "$exitCode" -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
-        exit $exitCode
+        exit 1
     fi
   displayName: 'Run a 2'
 
@@ -33,9 +35,9 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     # Check if the task failed
-    if [ "$exitCode" -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]Task 3 is failed"
-        exit $exitCode
+    if [ $? -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
+        exit 1
     fi
   displayName: 'Run a 3'
 
