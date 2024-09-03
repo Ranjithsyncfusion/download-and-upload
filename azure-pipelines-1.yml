@@ -1,6 +1,3 @@
-# Sample Azure Pipeline YAML with one script task
-trigger:
-- main
 variables:
   globalVariableName: ''
 
@@ -12,7 +9,7 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     if [ $? -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]1"
+        globalVariableName: 'Run a 1'
     fi
   displayName: 'Run a 1'
 - script: |
@@ -20,7 +17,7 @@ steps:
     echo "This is a sample script task."
     echo $(globalVariableName)
     if [ $? -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]2"
+        globalVariableName: 'Run a 2'
     fi
     exit 1
   displayName: 'Run a 2'
@@ -28,7 +25,7 @@ steps:
     echo "Hello, World!"
     echo "This is a sample script task."
     if [ $? -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]3"
+        globalVariableName: 'Run a 3'
     fi
   displayName: 'Run a 3'
 - script: |
