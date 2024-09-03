@@ -27,7 +27,7 @@ steps:
     
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]Task 1 is failed"
+        echo "##vso[task.setvariable variable=globalVariableName]Task 2 is failed"
         exit $exitCode
     fi
   displayName: 'Run a 2'
@@ -41,7 +41,7 @@ steps:
 
     # Check if the task failed
     if [ "$exitCode" -ne 0 ]; then
-        echo "##vso[task.setvariable variable=globalVariableName]Task 1 is failed"
+        echo "##vso[task.setvariable variable=globalVariableName]Task 3 is failed"
         exit $exitCode
     fi
   displayName: 'Run a 3'
