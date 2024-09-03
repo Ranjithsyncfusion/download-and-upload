@@ -1,5 +1,5 @@
 variables:
-  globalVariableName: ''
+  globalVariableName: ''  # Declare the global variable without an initial value
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -8,64 +8,65 @@ steps:
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
-    if [ $? -ne 0 ]; then
-        globalVariableName='Run a 1'
+    
+    # Simulate a failure condition for demonstration
+    someCommandThatFails || exitCode=$?
+
+    # Check if the task failed
+    if [ "$exitCode" -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Run a 1"
+        exit $exitCode
     fi
   displayName: 'Run a 1'
+
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
-    echo $(globalVariableName)
-    if [ $? -ne 0 ]; then
-        globalVariableName='Run a 2'
+    
+    # Simulate another failure
+    someOtherCommandThatFails || exitCode=$?
+    
+    # Check if the task failed
+    if [ "$exitCode" -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Run a 2"
+        exit $exitCode
     fi
-    exit 1
   displayName: 'Run a 2'
+
 - script: |
     echo "Hello, World!"
     echo "This is a sample script task."
-    if [ $? -ne 0 ]; then
-        globalVariableName='Run a 3'
+    
+    # Simulate yet another failure
+    yetAnotherCommandThatFails || exitCode=$?
+
+    # Check if the task failed
+    if [ "$exitCode" -ne 0 ]; then
+        echo "##vso[task.setvariable variable=globalVariableName]Run a 3"
+        exit $exitCode
     fi
   displayName: 'Run a 3'
+
 - script: |
-    cd $(Agent.WorkFolder)/1/a
-    ls
-    cd $(Agent.WorkFolder)/1/s
-    ls
-    cd $(Agent.WorkFolder)/1/b
-    ls
-    cd $(Agent.WorkFolder)/_temp
-    ls
     echo "Failed task name is: $(globalVariableName)."
   displayName: 'Run a 4'
-  condition: always()
+  condition: always()  # Run this task regardless of previous task success/failure
+
 - script: |
-      # Publish logs from a specified directory
-      echo "Publishing logs as artifacts"
-      mkdir -p $(Pipeline.Workspace)/logs
-      cp -r $(Agent.TempDirectory)/* $(Pipeline.Workspace)/logs/
-  name: CollectLogs
+    # Publish logs from a specified directory
+    echo "Publishing logs as artifacts"
+    mkdir -p $(Pipeline.Workspace)/logs
+    cp -r $(Agent.TempDirectory)/* $(Pipeline.Workspace)/logs/
+  displayName: 'Collect Logs'
+
 - script: |
     echo "Checking for failed tasks..."
 
-    failedTasks=()
-    
-    # Define an array of task names that should be checked for failure
-    taskNames=("task_1" "task_2" "task_3")
-    
-    for taskName in "${taskNames[@]}"; do
-        taskStatus=$(eval "echo \$${taskName}_RESULT")
-
-        if [ "$taskStatus" != "Succeeded" ]; then
-            failedTasks+=("$taskName")
-        fi
-    done
-
-    if [ ${#failedTasks[@]} -eq 0 ]; then
-        echo "No tasks failed."
-    else:
-        echo "The following tasks failed: ${failedTasks[*]}"
+    # Logic to identify failed tasks (note: this part is not necessary if we use the global variable correctly)
+    if [ -n "$(globalVariableName)" ]; then
+        echo "The following task failed: $(globalVariableName)"
         exit 1
+    else:
+        echo "No tasks failed."
     fi
   displayName: 'Check for Failed Tasks'
