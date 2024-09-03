@@ -21,6 +21,7 @@ steps:
     if [ $? -ne 0 ]; then
         echo "##vso[task.setvariable variable=globalVariableName]2"
     fi
+    echo $(globalVariableName)
     exit 1
   displayName: 'Run a 2'
 - script: |
