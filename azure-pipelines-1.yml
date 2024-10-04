@@ -18,9 +18,9 @@ jobs:
 
   - task: SendEmail@1
     inputs:
+      From: 'buildautomation@syncfusion.com'
       To: 'ranjithkumar.chinnadurai@syncfusion.com'
       CC: 'ranjithkumar.chinnadurai@syncfusion.com'
-      From: 'ranjithkumar.chinnadurai@syncfusion.com'
       Subject: 'Testing Mail'
       Body: '$(email_body)'
       BodyAsHtml: true
