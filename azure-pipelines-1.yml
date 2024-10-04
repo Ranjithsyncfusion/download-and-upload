@@ -5,30 +5,30 @@ jobs:
 
 - job: Ensuring_Mail_task
   steps:
-  - powershell: |
-      # Path to the HTML file
-      $htmlFile = "$(Build.SourcesDirectory)\TestResultsReport.html"
+  # - powershell: |
+  #     # Path to the HTML file
+  #     $htmlFile = "$(Build.SourcesDirectory)\TestResultsReport.html"
       
-      # Read the HTML content from the file
-      $email_body = Get-Content -Path $htmlFile -Raw
+  #     # Read the HTML content from the file
+  #     $email_body = Get-Content -Path $htmlFile -Raw
 
-      # Set the email_body as a pipeline variable to use later
-      Write-Host "##vso[task.setvariable variable=email_body]$email_body"
-    displayName: 'Read HTML file into variable'
+  #     # Set the email_body as a pipeline variable to use later
+  #     Write-Host "##vso[task.setvariable variable=email_body]$email_body"
+  #   displayName: 'Read HTML file into variable'
 
-  - task: SendEmail@1
-    inputs:
-      From: 'buildautomation@syncfusion.com'
-      To: 'ranjithkumar.chinnadurai@syncfusion.com'
-      CC: 'ranjithkumar.chinnadurai@syncfusion.com'
-      Subject: 'Testing Mail'
-      Body: '$(email_body)'
-      BodyAsHtml: true
-      AddAttachment: false
-      SmtpServer: 'smtp.office365.com'
-      SmtpUsername: 'buildautomation@syncfusion.com'
-      SmtpPassword: 'kmtsvprrgjtyytpb'
-      UseSSL: true
+  # - task: SendEmail@1
+  #   inputs:
+  #     From: 'buildautomation@syncfusion.com'
+  #     To: 'ranjithkumar.chinnadurai@syncfusion.com'
+  #     CC: 'ranjithkumar.chinnadurai@syncfusion.com'
+  #     Subject: 'Testing Mail'
+  #     Body: '$(email_body)'
+  #     BodyAsHtml: true
+  #     AddAttachment: false
+  #     SmtpServer: 'smtp.office365.com'
+  #     SmtpUsername: 'buildautomation@syncfusion.com'
+  #     SmtpPassword: 'kmtsvprrgjtyytpb'
+  #     UseSSL: true
   - powershell: |
       # Define the SMTP server details
       $smtpServer = "smtp.office365.com"  # Use your SMTP server
@@ -57,7 +57,58 @@ jobs:
       # Send the email using Send-MailMessage cmdlet
       Send-MailMessage -From $from -To $to -Subject $subject -Body $emailBody -BodyAsHtml -SmtpServer $smtpServer -Port $smtpPort -UseSsl -Credential $credential
 
-    displayName: 'Send HTML Email with STARTTLS'
+    displayName: 'Send HTML Content to the Email.'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Define SMTP settings
+        smtp_server="smtp.office365.com"
+        smtp_port="587"
+        smtp_user="your-email@example.com"
+        smtp_pass="your-password"
+        from="your-email@example.com"
+        to="recipient@example.com"
+        subject="Test Email with HTML Content"
+        html_file="$(Build.SourcesDirectory)/TestResultsReport.html"
+        
+        # Check if HTML file exists
+        if [ ! -f "$html_file" ]; then
+          echo "HTML file not found: $html_file"
+          exit 1
+        fi
+        
+        # Read HTML content from file
+        email_body=$(cat "$html_file")
+        
+        # Install msmtp for sending mail via SMTP (if not installed)
+        apt-get update
+        apt-get install -y msmtp
+        
+        # Configure msmtp (temporarily in the script)
+        cat <<EOF > ~/.msmtprc
+        defaults
+        auth           on
+        tls            on
+        tls_trust_file /etc/ssl/certs/ca-certificates.crt
+        logfile        ~/.msmtp.log
+
+        account        default
+        host           $smtp_server
+        port           $smtp_port
+        from           $smtp_user
+        user           $smtp_user
+        password       $smtp_pass
+
+        account default : default
+        EOF
+        
+        chmod 600 ~/.msmtprc
+        
+        # Send the email
+        echo -e "Subject: $subject\nTo: $to\nContent-Type: text/html\n\n$email_body" | msmtp --debug --from=$from -t $to
+
+    displayName: 'Send HTML Email with STARTTLS using Bash'
 
     
     
