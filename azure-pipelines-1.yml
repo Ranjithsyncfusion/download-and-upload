@@ -28,7 +28,7 @@ jobs:
       SmtpServer: 'smtp.office365.com'
       SmtpUsername: 'buildautomation@syncfusion.com'
       SmtpPassword: 'kmtsvprrgjtyytpb'
-      UseSSL: false
+      UseSSL: true
 
 
     
