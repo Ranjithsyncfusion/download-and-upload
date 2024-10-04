@@ -65,10 +65,10 @@ jobs:
         # Define SMTP settings
         smtp_server="smtp.office365.com"
         smtp_port="587"
-        smtp_user="your-email@example.com"
-        smtp_pass="your-password"
-        from="your-email@example.com"
-        to="recipient@example.com"
+        smtp_user="buildautomation@syncfusion.com"
+        smtp_pass="kmtsvprrgjtyytpb"
+        from="buildautomation@syncfusion.com"
+        to="ranjithkumar.chinnadurai@syncfusion.com"
         subject="Test Email with HTML Content"
         html_file="$(Build.SourcesDirectory)/TestResultsReport.html"
         
