@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results Report</title>
+    <style>
+        #overall-summary,
+        #module-breakdown {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #overall-summary h2,
+        #module-breakdown h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #module-breakdown table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #module-breakdown th,
+        #module-breakdown td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        #module-breakdown th {
+            background-color: #f2f2f2;
+        }
+        #module-breakdown tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div id="overall-summary">
+        <h2>Overall Test Summary</h2>
+        <ul>
+            <li><strong>Total Cases:</strong> 120</li>
+            <li><strong>Total Passed:</strong> 26</li>
+            <li><strong>Total Flaky:</strong> 20</li>
+            <li><strong>Total Failed:</strong> 42</li>
+            <li><strong>Total Skipped:</strong> 16</li>
+            <li><strong>Total Duration:</strong> 00:07:54</li>
+        </ul>
+    </div>
+    <div id="module-breakdown">
+        <h2>Module-wise Breakdown</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Total</th>
+                    <th>Passed</th>
+                    <th>Flaky</th>
+                    <th>Failed</th>
+                    <th>Skipped</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                            <td>bugfixresult</td>
+                            <td>20</td>
+                            <td>15</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2m 38s</td>
+                        </tr> <tr>
+                            <td>designerresult</td>
+                            <td>40</td>
+                            <td>11</td>
+                            <td>8</td>
+                            <td>20</td>
+                            <td>0</td>
+                            <td>2m 38s</td>
+                        </tr> <tr>
+                            <td>serverresult</td>
+                            <td>60</td>
+                            <td>0</td>
+                            <td>12</td>
+                            <td>20</td>
+                            <td>14</td>
+                            <td>2m 38s</td>
+                        </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>Regards,<br>QA Team
+</body>
+</html>
