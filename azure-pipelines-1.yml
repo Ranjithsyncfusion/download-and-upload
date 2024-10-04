@@ -7,7 +7,7 @@ jobs:
   steps:
   - powershell: |
       # Path to the HTML file
-      $htmlFile = "$(Build.SourcesDirectory)\email_template.html"
+      $htmlFile = "$(Build.SourcesDirectory)\TestResultsReport.html"
       
       # Read the HTML content from the file
       $email_body = Get-Content -Path $htmlFile -Raw
