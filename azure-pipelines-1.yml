@@ -18,13 +18,17 @@ jobs:
 
   - task: SendEmail@1
     inputs:
-      From: 'ranjithkumar.chinnadurai@syncfusion.com'
       To: 'ranjithkumar.chinnadurai@syncfusion.com'
       CC: 'ranjithkumar.chinnadurai@syncfusion.com'
+      From: 'ranjithkumar.chinnadurai@syncfusion.com'
       Subject: 'Testing Mail'
       Body: '$(email_body)'
       BodyAsHtml: true
       AddAttachment: false
+      SmtpServer: 'smtp.office365.com'
+      SmtpUsername: 'buildautomation@syncfusion.com'
+      SmtpPassword: 'kmtsvprrgjtyytpb'
+      UseSSL: false
 
 
     
