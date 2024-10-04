@@ -29,7 +29,35 @@ jobs:
       SmtpUsername: 'buildautomation@syncfusion.com'
       SmtpPassword: 'kmtsvprrgjtyytpb'
       UseSSL: true
+  - powershell: |
+      # Define the SMTP server details
+      $smtpServer = "smtp.office365.com"  # Use your SMTP server
+      $smtpPort = 587                     # STARTTLS port
+      $smtpUser = "buildautomation@syncfusion.com" # Sender email
+      $smtpPass = "kmtsvprrgjtyytpb"          # Sender email password
+      
+      # Path to the HTML file
+      $htmlFile = "$(Build.SourcesDirectory)\TestResultsReport.html"
 
+      # Read the HTML content from the file (ensure it is read as raw string)
+      $emailBody = Get-Content -Path $htmlFile -Raw
+      
+      # Optionally, check if the HTML body is correctly read
+      Write-Host "Email Body: $emailBody"
+
+      # Set up the email parameters
+      $from = "buildautomation@syncfusion.com"
+      $to = "ranjithkumar.chinnadurai@syncfusion.com"
+      $subject = "Test Email with HTML Content"
+
+      # Create the secure password
+      $securePassword = ConvertTo-SecureString $smtpPass -AsPlainText -Force
+      $credential = New-Object System.Management.Automation.PSCredential($smtpUser, $securePassword)
+
+      # Send the email using Send-MailMessage cmdlet
+      Send-MailMessage -From $from -To $to -Subject $subject -Body $emailBody -BodyAsHtml -SmtpServer $smtpServer -Port $smtpPort -UseSsl -Credential $credential
+
+    displayName: 'Send HTML Email with STARTTLS'
 
     
     
