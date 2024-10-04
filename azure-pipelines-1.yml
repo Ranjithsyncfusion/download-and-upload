@@ -1,16 +1,13 @@
+pool:
+  vmImage: Windows-latest
+
 jobs:
-- job: ExampleJob1
-  displayName: 'Publish to Azure Service Bus'
-  pool: server
+
+- job: Ensuring_Mail_task
   steps:
-    - task: PublishToAzureServiceBus@2
-      inputs:
-        azureSubscription: 'Ranjithazurebusre'
-        serviceBusQueueName: 'testingpipeline'
-        serviceBusNamespace: 'azurebusrk'
-        messageBody: 'noenwnnen'
-        signPayload: false
-        waitForCompletion: false
-        useDataContractSerializer: false
+  - script: |
+     ls
+     
+
     
     
