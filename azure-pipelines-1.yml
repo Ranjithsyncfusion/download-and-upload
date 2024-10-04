@@ -5,9 +5,17 @@ jobs:
 
 - job: Ensuring_Mail_task
   steps:
-  - script: |
-     email_body=$(cat email_template.html)
-     echo "##vso[task.setvariable variable=email_body]$email_body"
+  - powershell: |
+      # Path to the HTML file
+      $htmlFile = "$(Build.SourcesDirectory)\email_template.html"
+      
+      # Read the HTML content from the file
+      $email_body = Get-Content -Path $htmlFile -Raw
+
+      # Set the email_body as a pipeline variable to use later
+      Write-Host "##vso[task.setvariable variable=email_body]$email_body"
+    displayName: 'Read HTML file into variable'
+
   - task: SendEmail@1
     inputs:
       From: 'ranjithkumar.chinnadurai@syncfusion.com'
