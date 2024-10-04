@@ -1,13 +1,23 @@
 pool:
-  vmImage: Windows-latest
+  vmImage: Ubuntu-latest
 
 jobs:
 
 - job: Ensuring_Mail_task
   steps:
   - script: |
-     ls
-     
+     email_body=$(cat email_template.html)
+     echo "##vso[task.setvariable variable=email_body]$email_body"
+  - task: SendEmail@1
+    inputs:
+      From: 'ranjithkumar.chinnadurai@syncfusion.com'
+      To: 'ranjithkumar.chinnadurai@syncfusion.com'
+      CC: 'ranjithkumar.chinnadurai@syncfusion.com'
+      Subject: 'Testing Mail'
+      Body: '$(email_body)'
+      BodyAsHtml: true
+      AddAttachment: false
+
 
     
     
